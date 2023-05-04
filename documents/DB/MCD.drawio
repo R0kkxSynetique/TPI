@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-05-02T13:00:51.612Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.1 Chrome/112.0.5615.87 Electron/24.1.2 Safari/537.36" etag="YTsIBAHl0KC6q1Pc5CCS" version="21.2.1" type="device">
+<mxfile host="Electron" modified="2023-05-04T09:27:55.957Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.1 Chrome/112.0.5615.87 Electron/24.1.2 Safari/537.36" etag="antEvVHukwHEyYydtoQA" version="21.2.1" type="device">
   <diagram name="Page-1" id="a7904f86-f2b4-8e86-fa97-74104820619b">
     <mxGraphModel dx="1418" dy="820" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
       <root>
@@ -9,6 +9,14 @@
             <mxPoint x="490" y="382.5" as="targetPoint" />
             <Array as="points">
               <mxPoint x="560" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NibvBx3HhtqYWF9xuC3B-3" value="0,n" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="24794b860abc3c2d-1" target="NibvBx3HhtqYWF9xuC3B-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="60" y="633" />
+              <mxPoint x="60" y="170" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -29,6 +37,13 @@
         </mxCell>
         <mxCell id="XpSMgFAJoRa7n-W6bPn0-7" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center ; text-decoration: underline&quot;&gt;&lt;b&gt;Hélices&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;border-color: var(--border-color); margin: 0px 0px 0px 8px;&quot;&gt;&lt;/p&gt;&lt;table cellpadding=&quot;5&quot; align=&quot;left&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;u&gt;Taille&lt;/u&gt;&lt;/td&gt;&lt;td&gt;Texte&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;u&gt;Type&lt;/u&gt;&lt;/td&gt;&lt;td&gt;Texte&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;u&gt;Nombre de pales&lt;/u&gt;&lt;/td&gt;&lt;td&gt;Nombre&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;&lt;/p&gt;&lt;table&gt;&lt;tbody&gt;&lt;/tbody&gt;&lt;/table&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1" parent="1" vertex="1">
           <mxGeometry x="702.5" y="710" width="165" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="NibvBx3HhtqYWF9xuC3B-2" value="0,1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="XpSMgFAJoRa7n-W6bPn0-8" target="NibvBx3HhtqYWF9xuC3B-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="785" y="170" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="XpSMgFAJoRa7n-W6bPn0-8" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center ; text-decoration: underline&quot;&gt;&lt;b&gt;Batteries&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;border-color: var(--border-color); margin: 0px 0px 0px 8px;&quot;&gt;&lt;/p&gt;&lt;table align=&quot;left&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;u&gt;Capacité&lt;/u&gt;&lt;/td&gt;&lt;td&gt;Texte&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;u&gt;Cellules&lt;/u&gt;&lt;/td&gt;&lt;td&gt;Texte&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;u&gt;Type&lt;/u&gt;&lt;/td&gt;&lt;td&gt;Texte&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;u&gt;Ratio C-Rate&lt;/u&gt;&lt;/td&gt;&lt;td&gt;Texte&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;&lt;/p&gt;&lt;table&gt;&lt;tbody&gt;&lt;/tbody&gt;&lt;/table&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1" parent="1" vertex="1">
           <mxGeometry x="730" y="200" width="110" height="110" as="geometry" />
@@ -158,6 +173,9 @@
             <mxPoint x="579.5" y="312.5" as="sourcePoint" />
             <mxPoint x="443.8000000000002" y="250" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="NibvBx3HhtqYWF9xuC3B-1" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center ; text-decoration: underline&quot;&gt;&lt;b&gt;Possèder&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;border-color: var(--border-color); margin: 0px 0px 0px 8px;&quot;&gt;&lt;/p&gt;&lt;table&gt;&lt;tbody&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;&lt;/p&gt;&lt;table&gt;&lt;tbody&gt;&lt;/tbody&gt;&lt;/table&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1" vertex="1" parent="1">
+          <mxGeometry x="320" y="140" width="110" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
