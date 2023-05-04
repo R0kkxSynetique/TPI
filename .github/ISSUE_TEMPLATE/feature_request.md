@@ -9,6 +9,7 @@ assignees: R0kkxSynetique
 
 # Comportement attendu
 <!-- Description clair et concise de ce qui est attendu de la nouvelle foncionnalité -->
+<!-- Qui, Quoi, pourquoi-->
 
 # Assets
 <!-- Images, screenshots, Design, etc... -->
