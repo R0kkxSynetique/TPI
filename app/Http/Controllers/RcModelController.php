@@ -143,10 +143,21 @@ class RcModelController extends Controller
     /**
      * Remove the rc model image from storage.
      * @param string $rcModelid
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(string $rcModelid)
     {
-        //TODO
+        // * Getting the rc model from the database
+        $rcModel = RcModel::find($rcModelid);
+
+        // * Deleting the rc model from the database
+        $rcModel->delete();
+
+        // * Deleting the image from the storage
+        Storage::delete("RcModelsImages/{$rcModelid}.jpg");
+
+        // * Redirecting to the "homepage"
+        return redirect()->route('rc-models.index');
     }
 
     /**
