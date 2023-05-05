@@ -28,7 +28,7 @@ function destroy(id) {
         router.delete('/rc-models/' + id);
     } else {
         //? implement toasts
-        alert('Une erreure est survenue lors de la suppression de votre modèle.');
+        alert('Une erreur est survenue lors de la suppression de votre modèle.');
     }
 }
 </script>
