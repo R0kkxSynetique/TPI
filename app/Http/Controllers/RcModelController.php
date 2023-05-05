@@ -125,19 +125,85 @@ class RcModelController extends Controller
     /**
      * Show the form to edit the specified rc model.
      * @param string $id
+     * @return \Inertia\Response
      */
     public function edit(string $id)
     {
-        //TODO
+        return inertia("RcModelEdit", [
+            'rc-model' => RcModel::with(['engines', 'batteries', 'propellers', 'transmitter'])->where('id', "=", $id)->first(),
+            'transmitters' => Transmitter::all(),
+            'engines' => Engine::all(),
+            'propellers' => Propeller::all(),
+            'batteries' => Battery::all(),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      * @param RcModel $rcModel
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(RcModel $rcModel)
     {
-        //TODO
+        // * Getting the rc model data from the request
+        $input = collect(request()->get('rcModel'));
+
+        // * Updating the rc model in the database
+        DB::transaction(function () use ($input, $rcModel) {
+            $rcModel->update($input->only([
+                'name',
+                'manufacturer',
+                'description',
+                'wingSpan',
+                'weight',
+                'length',
+                'height',
+                'acquired_on',
+                'finished_on',
+                'first_flown_on',
+                'transmitter_id',
+                'flights_offset',
+            ])->toArray());
+            // * Syncing the engines, propellers and batteries to the rc model
+            $engines = collect($input->get('engines'));
+            $rcModel->engines()->sync(
+                $engines->mapWithKeys(fn ($engine) => [$engine['id'] => ['quantity' => $engine['pivot']['quantity']]])
+            );
+            $propellers = collect($input->get('propellers'));
+            $rcModel->propellers()->sync(
+                $propellers->mapWithKeys(fn ($propeller) => [$propeller['id'] => ['quantity' => $propeller['pivot']['quantity']]])
+            );
+            $batteries = collect($input->get('batteries'));
+            $rcModel->batteries()->sync(
+                $batteries->mapWithKeys(fn ($battery) => [$battery['id'] => ['quantity' => $battery['pivot']['quantity']]])
+            );
+        });
+
+        // * Redirecting to this rc model page
+        return redirect()->route('rc-models.show', $rcModel->id);
+    }
+
+    /**
+     * Update the image in storage.
+     * @param string $rcModelid
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateImage(string $rcModelid)
+    {
+        // * Validation of the image
+        request()->validate([
+            'image' => [
+                'required',
+                File::image()
+                    ->max(12 * 1024)
+            ]
+        ]);
+
+        // * Storing the image named after the rc model id
+        request()->file('image')->storeAs("RcModelsImages", $rcModelid . ".jpg");
+
+        // * Redirecting to the previous location
+        return back();
     }
 
     /**

@@ -28,7 +28,7 @@ function destroy(id) {
         router.delete('/rc-models/' + id);
     } else {
         //? implement toasts
-        alert("Une erreure est survenue lors de la suppression de votre modèle.")
+        alert('Une erreure est survenue lors de la suppression de votre modèle.');
     }
 }
 </script>
@@ -57,6 +57,16 @@ function destroy(id) {
                         <MenuItems
                             class="absolute right-0 z-10 mt-2 origin-top-right bg-white rounded-md shadow-lg w-fit">
                             <div class="py-1">
+                                <MenuItem v-slot="{ active }">
+                                    <Link
+                                        :href="'/rc-models/' + rcModel.id + '/edit'"
+                                        :class="[
+                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                            'block px-4 py-2 text-sm',
+                                        ]"
+                                        >Modifier</Link
+                                    >
+                                </MenuItem>
                                 <MenuItem v-slot="{ active }">
                                     <button
                                         @click="openDelete = true"
