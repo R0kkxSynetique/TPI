@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import MoreIcon from '@/Components/icons/MoreIcon.vue';
 import SideBarMenu from '@/Components/SideBarMenu.vue';
 import {
@@ -14,14 +14,33 @@ import {
     TransitionRoot,
 } from '@headlessui/vue';
 import moment from 'moment';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useToast } from 'vue-toastification';
+
+const message = computed(() => usePage().props.flash.message).value;
+const type = computed(() => usePage().props.flash.type).value;
 
 const openDelete = ref(false);
+
+const toast = useToast();
 
 defineProps({
     rcModel: Object,
     flights: Object,
 });
+
+if (message){
+    switch (type) {
+        case 'success':
+            toast.success(message);
+            break;
+        case 'error':
+            toast.error(message);
+            break;
+        default:
+            toast(message);
+    }
+}
 
 function destroy(id) {
     if (id) {

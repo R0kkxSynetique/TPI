@@ -32,6 +32,7 @@ import {
     ListboxOptions,
 } from '@headlessui/vue';
 import { useImagePreview } from '../lib/image';
+import { useToast } from 'vue-toastification';
 
 const props = defineProps({
     rcModel: Object,
@@ -45,7 +46,7 @@ const fileInput = ref();
 const openEngine = ref(false);
 const openPropeller = ref(false);
 const openBattery = ref(false);
-const openDelete = ref(false)
+const openDelete = ref(false);
 
 const { preview, updatePreview, clearPreview } = useImagePreview(fileInput);
 
@@ -137,6 +138,8 @@ const form = useForm({
     image: null,
 });
 
+const toast = useToast();
+
 const submit = () => {
     props.rcModel.transmitter_id = selectedTransmiter.value.id;
     form.rcModel = props.rcModel;
@@ -155,7 +158,14 @@ function destroy(id) {
 function updateImage(id) {
     if (fileInput.value) {
         file.image = fileInput.value.files ? fileInput.value.files[0] : null;
-        file.post('/image/rcModel/' + id);
+        file.post('/image/rcModel/' + id, {
+            onSuccess: () => {
+                toast.success('Image mise à jour!');
+            },
+            onError: () => {
+                toast.error('Une erreur est survenue lors de la mise à jour de l\'image.');
+            }
+        });
     }
 }
 </script>

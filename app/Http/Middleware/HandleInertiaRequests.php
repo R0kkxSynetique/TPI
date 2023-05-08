@@ -40,6 +40,10 @@ class HandleInertiaRequests extends Middleware
         // * Share the logged in user with all the inertia pages
         return array_merge(parent::share($request), [
             'auth.user'=> fn () => Auth::user() ? Auth::user() : null,
+            'flash' => [
+                'message' => session('message'),
+                'type' => session('type'),
+            ],
         ]);
     }
 }
