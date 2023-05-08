@@ -14,7 +14,7 @@ class UserController extends Controller
      * Display the user settings page.
      * @return \Inertia\Response
      */
-    public function index()
+    public function show()
     {
         return inertia("UserSettings");
     }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\RcModelController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BatteryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,9 +27,11 @@ Route::middleware([
 ])->group(function () {
     Route::resources([
         'rc-models' => 'App\Http\Controllers\RcModelController',
+        'user' => 'App\Http\Controllers\UserController',
+        'batteries' => 'App\Http\Controllers\BatteryController',
     ]);
 
-    Route::name('user.settings.')->controller(UserController::class)->group(function () {
+    Route::name('user.')->controller(UserController::class)->group(function () {
         Route::get('/user/settings', 'index')->name('index');
         Route::get('/image/user/{userId}', 'getUserImage');
         Route::post('/image/user/{userId}', 'updateImage');
@@ -39,5 +42,9 @@ Route::middleware([
         Route::get('/', 'index')->name('/');
         Route::get('/image/rcModel/{rcModelId}', 'getRcModelImage');
         Route::post('/image/rcModel/{rcModelId}', 'updateImage');
+    });
+
+    Route::name('batteries.')->controller(BatteryController::class)->group(function () {
+        Route::get('/user/settings', 'index')->name('index');
     });
 });
