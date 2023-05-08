@@ -8,12 +8,32 @@ import TransmitterIcon from '@/Components/icons/TransmitterIcon.vue';
 import BatteryIcon from '@/Components/icons/BatteryIcon.vue';
 import GasIcon from '@/Components/icons/GasIcon.vue';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
+import { computed } from 'vue';
+import { useToast } from 'vue-toastification';
 
 const user = usePage().props.auth.user;
+const toast = useToast();
 
 defineProps({
     rcModels: Object,
 });
+
+const message = computed(() => usePage().props.flash.message).value;
+const type = computed(() => usePage().props.flash.type).value;
+
+if (message){
+    switch (type) {
+        case 'success':
+            toast.success(message);
+            break;
+        case 'error':
+            toast.error(message);
+            break;
+        default:
+            toast(message);
+    }
+}
+
 </script>
 
 <template>

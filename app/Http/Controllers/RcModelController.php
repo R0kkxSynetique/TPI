@@ -179,7 +179,7 @@ class RcModelController extends Controller
             );
         });
 
-        // * Redirecting to this rc model page
+        // * Redirecting to this rc model page with a success message
         return redirect()->route('rc-models.show', $rcModel->id)->with(['message' => 'Modèle réduit mit à jour avec succès!', 'type' => 'success']);
     }
 
@@ -207,7 +207,7 @@ class RcModelController extends Controller
     }
 
     /**
-     * Remove the rc model image from storage.
+     * Remove the rc model from the DB & its image from storage.
      * @param string $rcModelid
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -222,8 +222,8 @@ class RcModelController extends Controller
         // * Deleting the image from the storage
         Storage::delete("RcModelsImages/{$rcModelid}.jpg");
 
-        // * Redirecting to the "homepage"
-        return redirect()->route('rc-models.index');
+        // * Redirecting to the "homepage" with a success message
+        return redirect()->route('rc-models.index')->with(['message' => 'Modèle réduit supprimé avec succès!', 'type' => 'success']);
     }
 
     /**
