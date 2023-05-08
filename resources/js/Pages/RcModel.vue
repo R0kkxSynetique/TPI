@@ -52,7 +52,7 @@ function destroy(id) {
 }
 </script>
 <template>
-    <Head :title="rcModel.name"></Head>
+    <Head :title="rcModel.name ? rcModel.name : 'Modèle réduit'"></Head>
 
     <div
         class="h-[14rem] rounded-b-[4rem] bg-gradient-to-br from-gradientfrom to-gradientto text-white text-2xl w-full">
@@ -177,10 +177,10 @@ function destroy(id) {
     </div>
     <div class="mx-5 mt-3 [&>div>h1]:text-xl [&>div>h1]:text-app [&>div]:pt-4 pb-5">
         <div>
-            <h1 class="max-w-full truncate">
+            <h1 class="max-w-full break-words">
                 {{ rcModel.name }}
             </h1>
-            <p class="max-w-full truncate">
+            <p class="max-w-full break-words">
                 <i v-if="rcModel.manufacturer">
                     {{ rcModel.manufacturer }}
                 </i>
@@ -188,7 +188,7 @@ function destroy(id) {
         </div>
         <div v-if="rcModel.description">
             <h1>Descritpion</h1>
-            <p>
+            <p class="max-w-full break-words">
                 {{ rcModel.description }}
             </p>
         </div>

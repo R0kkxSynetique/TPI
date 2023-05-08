@@ -997,6 +997,7 @@ function updateImage(id) {
                 <input
                     type="number"
                     v-model="rcModel.flights_offset"
+                    max="1000000000"
                     class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
             </div>
 
