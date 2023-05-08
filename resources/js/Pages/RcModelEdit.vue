@@ -130,21 +130,17 @@ function addBattery(batteryId) {
     }
 }
 
-// const file = useForm({ image: null });
+const file = useForm({ image: null });
 
 const form = useForm({
     rcModel: null,
-    image: '',
-    _method: 'put'
+    image: null,
 });
 
 const submit = () => {
     props.rcModel.transmitter_id = selectedTransmiter.value.id;
     form.rcModel = props.rcModel;
-    if (fileInput.value) {
-        form.image = fileInput.value.files ? fileInput.value.files[0] : null;
-    }
-    form.post(`/rc-models/${props.rcModel.id}`);
+    form.put(`/rc-models/${props.rcModel.id}`);
 };
 
 function destroy(id) {
