@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import MoreIcon from '@/Components/icons/MoreIcon.vue';
 import SideBarMenu from '@/Components/SideBarMenu.vue';
 import {
@@ -14,26 +14,45 @@ import {
     TransitionRoot,
 } from '@headlessui/vue';
 import moment from 'moment';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useToast } from 'vue-toastification';
+
+const message = computed(() => usePage().props.flash.message).value;
+const type = computed(() => usePage().props.flash.type).value;
 
 const openDelete = ref(false);
+
+const toast = useToast();
 
 defineProps({
     rcModel: Object,
     flights: Object,
 });
 
+if (message){
+    switch (type) {
+        case 'success':
+            toast.success(message);
+            break;
+        case 'error':
+            toast.error(message);
+            break;
+        default:
+            toast(message);
+    }
+}
+
 function destroy(id) {
     if (id) {
         router.delete('/rc-models/' + id);
     } else {
         //? implement toasts
-        alert("Une erreure est survenue lors de la suppression de votre modèle.")
+        alert('Une erreur est survenue lors de la suppression de votre modèle.');
     }
 }
 </script>
 <template>
-    <Head :title="rcModel.name"></Head>
+    <Head :title="rcModel.name ? rcModel.name : 'Modèle réduit'"></Head>
 
     <div
         class="h-[14rem] rounded-b-[4rem] bg-gradient-to-br from-gradientfrom to-gradientto text-white text-2xl w-full">
@@ -57,6 +76,16 @@ function destroy(id) {
                         <MenuItems
                             class="absolute right-0 z-10 mt-2 origin-top-right bg-white rounded-md shadow-lg w-fit">
                             <div class="py-1">
+                                <MenuItem v-slot="{ active }">
+                                    <Link
+                                        :href="'/rc-models/' + rcModel.id + '/edit'"
+                                        :class="[
+                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                            'block px-4 py-2 text-sm',
+                                        ]"
+                                        >Modifier</Link
+                                    >
+                                </MenuItem>
                                 <MenuItem v-slot="{ active }">
                                     <button
                                         @click="openDelete = true"
@@ -148,10 +177,10 @@ function destroy(id) {
     </div>
     <div class="mx-5 mt-3 [&>div>h1]:text-xl [&>div>h1]:text-app [&>div]:pt-4 pb-5">
         <div>
-            <h1 class="max-w-full truncate">
+            <h1 class="max-w-full break-words">
                 {{ rcModel.name }}
             </h1>
-            <p class="max-w-full truncate">
+            <p class="max-w-full break-words">
                 <i v-if="rcModel.manufacturer">
                     {{ rcModel.manufacturer }}
                 </i>
@@ -159,7 +188,7 @@ function destroy(id) {
         </div>
         <div v-if="rcModel.description">
             <h1>Descritpion</h1>
-            <p>
+            <p class="max-w-full break-words">
                 {{ rcModel.description }}
             </p>
         </div>
