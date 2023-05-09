@@ -3,7 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Flights;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,6 +19,15 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\User::factory(1)->create([
             'email' => 'test@doe.ch',
+        ]);
+        $this->call([
+            PropellersSeeder::class,
+            EnginesSeeder::class,
+            TransmittersSeeder::class,
+            BatteriesSeeder::class,
+            RcModelsSeeder::class,
+            FlightsSeeder::class,
+            LinksSeeder::class,
         ]);
     }
 }
