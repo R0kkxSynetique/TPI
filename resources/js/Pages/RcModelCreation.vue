@@ -357,9 +357,13 @@ const submit = () => {
                                                                                                     selectedEngine
                                                                                                         ? 'font-semibold'
                                                                                                         : 'font-normal',
-                                                                                                    'ml-3 block truncate',
+                                                                                                    'ml-3 truncate flex gap-2',
                                                                                                 ]"
-                                                                                                >{{
+                                                                                                ><StarIcon
+                                                                                                    v-if="
+                                                                                                        engine.user_id
+                                                                                                    "
+                                                                                                    class="w-4" />{{
                                                                                                     engine.name +
                                                                                                     ' ' +
                                                                                                     engine.power

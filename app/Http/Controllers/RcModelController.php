@@ -37,7 +37,13 @@ class RcModelController extends Controller
     {
         return inertia("RcModelCreation", [
             'transmitters' => Transmitter::all(),
-            'engines' => Engine::all(),
+            'engines' => Engine::where('user_id', '=', Auth::user()->id)
+                ->orWhere('user_id', '=', null)
+                ->orderBy('user_id', 'desc')
+                ->orderBy('name', 'asc')
+                ->orderBy('power', 'asc')
+                ->orderBy('frequency', 'asc')
+                ->orderBy('type', 'asc')->get(),
             'propellers' => Propeller::all(),
             'batteries' => Battery::where('user_id', '=', Auth::user()->id)
                 ->orWhere('user_id', '=', null)
@@ -138,7 +144,13 @@ class RcModelController extends Controller
         return inertia("RcModelEdit", [
             'rc-model' => RcModel::with(['engines', 'batteries', 'propellers', 'transmitter'])->where('id', "=", $id)->first(),
             'transmitters' => Transmitter::all(),
-            'engines' => Engine::all(),
+            'engines' => Engine::where('user_id', '=', Auth::user()->id)
+                ->orWhere('user_id', '=', null)
+                ->orderBy('user_id', 'desc')
+                ->orderBy('name', 'asc')
+                ->orderBy('power', 'asc')
+                ->orderBy('frequency', 'asc')
+                ->orderBy('type', 'asc')->get(),
             'propellers' => Propeller::all(),
             'batteries' => Battery::where('user_id', '=', Auth::user()->id)
                 ->orWhere('user_id', '=', null)
