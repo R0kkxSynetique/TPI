@@ -1,10 +1,9 @@
 <script setup>
 import { Link, router, usePage } from '@inertiajs/vue3';
 import MenuIcon from '../Components/icons/MenuIcon.vue';
-import ModelsIcons from '../Components/icons/ModelsIcon.vue';
 import RightArrowIcon from '../Components/icons/RightArrowIcon.vue';
-import CogIcon from '../Components/icons/CogIcon.vue';
 import LogoutIcon from '../Components/icons/LogoutIcon.vue';
+import {Battery0Icon, Squares2X2Icon, Cog6ToothIcon} from '@heroicons/vue/20/solid';
 
 const user = usePage().props.auth.user;
 
@@ -72,7 +71,7 @@ defineProps({
                         :class="{ 'bg-slate-200': route().current('rc-models.*') }"
                         href="/">
                         <div class="flex items-center justify-center gap-2 py-3 ml-10">
-                            <ModelsIcons />
+                            <Squares2X2Icon class="h-5" />
                             <p>Mes modèles</p>
                         </div>
                         <div class="px-5 ml-auto">
@@ -81,10 +80,22 @@ defineProps({
                     </Link>
                     <Link
                         class="flex items-center w-full hover:bg-slate-100"
-                        :class="{ 'bg-slate-200': route().current('user.settings.index') }"
+                        :class="{ 'bg-slate-200': route().current('batteries.*') }"
+                        href="/batteries">
+                        <div class="flex items-center justify-center gap-2 py-3 ml-10">
+                            <Battery0Icon class="h-5" />
+                            <p>Mes batteries</p>
+                        </div>
+                        <div class="px-5 ml-auto">
+                            <RightArrowIcon />
+                        </div>
+                    </Link>
+                    <Link
+                        class="flex items-center w-full hover:bg-slate-100"
+                        :class="{ 'bg-slate-200': route().current('user.settings.*') }"
                         href="/user/settings">
                         <div class="flex items-center justify-center gap-2 py-3 ml-10">
-                            <CogIcon />
+                            <Cog6ToothIcon class="h-5" />
                             <p>Mes paramètres</p>
                         </div>
                         <div class="px-5 ml-auto">
