@@ -53,7 +53,9 @@ const { preview, updatePreview, clearPreview } = useImagePreview(fileInput);
 
 const { textarea, input } = useTextareaAutosize({ watch: props.rcModel });
 
-const selectedTransmiter = ref(props.transmitters.find((transmitter) => transmitter.id == props.rcModel.transmitter_id));
+const selectedTransmiter = ref(
+    props.transmitters.find((transmitter) => transmitter.id == props.rcModel.transmitter_id)
+);
 const selectedEngine = ref(props.engines['0']);
 const selectedPropeller = ref(props.propellers['0']);
 const selectedBattery = ref(props.batteries['0']);
@@ -484,9 +486,13 @@ function updateImage(id) {
                                                                                                     selectedEngine
                                                                                                         ? 'font-semibold'
                                                                                                         : 'font-normal',
-                                                                                                    'ml-3 block truncate',
+                                                                                                    'ml-3 truncate flex gap-2',
                                                                                                 ]"
-                                                                                                >{{
+                                                                                                ><StarIcon
+                                                                                                    v-if="
+                                                                                                        engine.user_id
+                                                                                                    "
+                                                                                                    class="w-4" />{{
                                                                                                     engine.name +
                                                                                                     ' ' +
                                                                                                     engine.power
