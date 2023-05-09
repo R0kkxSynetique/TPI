@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Battery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BatteryController extends Controller
 {
@@ -23,7 +24,7 @@ class BatteryController extends Controller
      */
     public function create()
     {
-        //
+        // ! this wont be used because the creation is made via a modal 
     }
 
     /**
@@ -31,7 +32,26 @@ class BatteryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // * Getting the battery data from the request
+        $input = collect(request()->get('battery'));
+
+        // * Replacing the user id placeholder in the battery
+        $input->put('user_id', Auth::user()->id);
+
+        // * Creating the battery in the database
+        $battery = DB::transaction(function () use ($input) {
+            $battery = Battery::create($input->only([
+                'capacity',
+                'cells',
+                'type',
+                'cRate',
+                'user_id'
+            ])->toArray());
+            return $battery;
+        });
+
+        // * Redirecting to the user's batteries list
+        return redirect()->back()->with(['message' => 'Votre batterie à été crée avec succès', 'type' => 'success']);
     }
 
     /**

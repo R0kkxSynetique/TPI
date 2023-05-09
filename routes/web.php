@@ -45,6 +45,6 @@ Route::middleware([
     });
 
     Route::name('batteries.')->controller(BatteryController::class)->group(function () {
-        Route::get('/user/settings', 'index')->name('index');
+        Route::get('/batteries', 'index')->name('index');
     });
 });
