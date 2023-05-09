@@ -3,6 +3,7 @@
 use App\Http\Controllers\RcModelController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BatteryController;
+use App\Http\Controllers\EngineController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,5 +47,9 @@ Route::middleware([
 
     Route::name('batteries.')->controller(BatteryController::class)->group(function () {
         Route::get('/batteries', 'index')->name('index');
+    });
+
+    Route::name('engines.')->controller(EngineController::class)->group(function () {
+        Route::get('/engines', 'index')->name('index');
     });
 });

@@ -1,8 +1,9 @@
 <script setup>
 import { Link, router, usePage } from '@inertiajs/vue3';
-import MenuIcon from '../Components/icons/MenuIcon.vue';
-import RightArrowIcon from '../Components/icons/RightArrowIcon.vue';
-import LogoutIcon from '../Components/icons/LogoutIcon.vue';
+import MenuIcon from '@/Components/icons/MenuIcon.vue';
+import RightArrowIcon from '@/Components/icons/RightArrowIcon.vue';
+import LogoutIcon from '@/Components/icons/LogoutIcon.vue';
+import EngineIcon from './icons/EngineIcon.vue';
 import {Battery0Icon, Squares2X2Icon, Cog6ToothIcon} from '@heroicons/vue/20/solid';
 
 const user = usePage().props.auth.user;
@@ -85,6 +86,18 @@ defineProps({
                         <div class="flex items-center justify-center gap-2 py-3 ml-10">
                             <Battery0Icon class="h-5" />
                             <p>Mes batteries</p>
+                        </div>
+                        <div class="px-5 ml-auto">
+                            <RightArrowIcon />
+                        </div>
+                    </Link>
+                    <Link
+                        class="flex items-center w-full hover:bg-slate-100"
+                        :class="{ 'bg-slate-200': route().current('engines.*') }"
+                        href="/engines">
+                        <div class="flex items-center justify-center gap-2 py-3 ml-10">
+                            <EngineIcon class="h-5" />
+                            <p>Mes moteurs</p>
                         </div>
                         <div class="px-5 ml-auto">
                             <RightArrowIcon />

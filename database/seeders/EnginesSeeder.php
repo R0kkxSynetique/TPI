@@ -19,7 +19,7 @@ class EnginesSeeder extends Seeder
                 'power' => '120cc',
                 'type' => '95 SP 3.3%',
                 'weight' => '3450',
-                'frequency' => '4stroke',
+                'frequency' => '4 temps',
                 'user_id' => 1
             ],
             [
@@ -27,7 +27,7 @@ class EnginesSeeder extends Seeder
                 'power' => '85cc',
                 'type' => '95 SP 3.3%',
                 'weight' => '3250',
-                'frequency' => '4stroke',
+                'frequency' => '4 temps',
                 'user_id' => 1
             ]
         ];

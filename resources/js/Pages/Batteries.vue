@@ -87,7 +87,7 @@ const submit = () => {
                 </div>
             </div>
             <div class="flex items-center justify-between">
-                <h1 class="pt-10 pl-12">Mes batteries</h1>
+                <h1 class="pt-10 pl-12">Mes<br/>batteries</h1>
                 <button
                     v-if="batteries.length > 0"
                     @click="openCreate = true"
