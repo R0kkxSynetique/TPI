@@ -2,11 +2,10 @@
 import { Head, useForm } from '@inertiajs/vue3';
 import SideBarMenu from '@/Components/SideBarMenu.vue';
 import Button from '@/Components/Button.vue';
-import MoreIcon from '@/Components/icons/MoreIcon.vue';
 import { useTextareaAutosize } from '@vueuse/core';
 import CrossIcon from '@/Components/icons/CrossIcon.vue';
 import { ref } from 'vue';
-import { PhotoIcon, PlusIcon, CheckIcon, ChevronDownIcon } from '@heroicons/vue/20/solid';
+import { PhotoIcon, PlusIcon, CheckIcon, ChevronDownIcon, StarIcon } from '@heroicons/vue/20/solid';
 import {
     Listbox,
     ListboxButton,
@@ -14,17 +13,7 @@ import {
     ListboxOption,
     ListboxOptions,
 } from '@headlessui/vue';
-import {
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems,
-    Dialog,
-    DialogPanel,
-    DialogTitle,
-    TransitionChild,
-    TransitionRoot,
-} from '@headlessui/vue';
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
 import { useImagePreview } from '../lib/image';
 
 const props = defineProps({
@@ -64,10 +53,10 @@ const openEngine = ref(false);
 const openPropeller = ref(false);
 const openBattery = ref(false);
 
-const selectedEngine = props.engines['0'];
-const selectedPropeller = props.propellers['0'];
-const selectedBattery = props.batteries['0'];
-const selectedTransmiter = props.transmitters['0'];
+const selectedEngine = ref(props.engines['0']);
+const selectedPropeller = ref(props.propellers['0']);
+const selectedBattery = ref(props.batteries['0']);
+const selectedTransmiter = ref(props.transmitters['0']);
 
 const { preview, updatePreview, clearPreview } = useImagePreview(fileInput);
 
@@ -174,7 +163,12 @@ const submit = () => {
                         backgroundImage: `url('${preview}')`,
                     }" />
                 <PhotoIcon v-else class="w-32" @click="$refs.fileInput.click()" />
-                <input type="file" ref="fileInput" accept="image/*" class="hidden" @change="updatePreview"/>
+                <input
+                    type="file"
+                    ref="fileInput"
+                    accept="image/*"
+                    class="hidden"
+                    @change="updatePreview" />
             </div>
         </div>
     </div>
@@ -257,7 +251,9 @@ const submit = () => {
                 </div>
                 <div>
                     <p>Moteurs:</p>
-                    <div v-for="(engine, index) in form.rcModel.engines" class="flex flex-wrap gap-2 my-2">
+                    <div
+                        v-for="(engine, index) in form.rcModel.engines"
+                        class="flex flex-wrap gap-2 my-2">
                         <div
                             class="flex items-center gap-1 px-2 py-1 rounded-full bg-app-secondary w-fit"
                             v-for="n in engine.pivot.quantity">
@@ -721,9 +717,14 @@ const submit = () => {
                                                                                                         selectedBattery
                                                                                                             ? 'font-semibold'
                                                                                                             : 'font-normal',
-                                                                                                        'ml-3 block truncate',
+                                                                                                        'ml-3 truncate flex gap-2',
                                                                                                     ]"
-                                                                                                    >{{
+                                                                                                    ><StarIcon
+                                                                                                        v-if="
+                                                                                                            battery.user_id
+                                                                                                        "
+                                                                                                        class="w-4" />
+                                                                                                    {{
                                                                                                         battery.cells +
                                                                                                         's ' +
                                                                                                         battery.capacity +

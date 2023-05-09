@@ -39,7 +39,13 @@ class RcModelController extends Controller
             'transmitters' => Transmitter::all(),
             'engines' => Engine::all(),
             'propellers' => Propeller::all(),
-            'batteries' => Battery::all(),
+            'batteries' => Battery::where('user_id', '=', Auth::user()->id)
+                ->orWhere('user_id', '=', null)
+                ->orderBy('user_id', 'desc')
+                ->orderBy('type', 'asc')
+                ->orderBy('cells', 'asc')
+                ->orderBy('capacity', 'asc')
+                ->orderBy('cRate', 'asc')->get(),
         ]);
     }
 
@@ -134,7 +140,13 @@ class RcModelController extends Controller
             'transmitters' => Transmitter::all(),
             'engines' => Engine::all(),
             'propellers' => Propeller::all(),
-            'batteries' => Battery::all(),
+            'batteries' => Battery::where('user_id', '=', Auth::user()->id)
+                ->orWhere('user_id', '=', null)
+                ->orderBy('user_id', 'desc')
+                ->orderBy('type', 'asc')
+                ->orderBy('cells', 'asc')
+                ->orderBy('capacity', 'asc')
+                ->orderBy('cRate', 'asc')->get(),
         ]);
     }
 

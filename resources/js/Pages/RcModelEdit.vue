@@ -21,6 +21,7 @@ import {
     ChevronDownIcon,
     ExclamationTriangleIcon,
     PlusIcon,
+    StarIcon,
 } from '@heroicons/vue/20/solid';
 import Button from '../Components/Button.vue';
 import RightArrowIcon from '../Components/icons/RightArrowIcon.vue';
@@ -52,13 +53,10 @@ const { preview, updatePreview, clearPreview } = useImagePreview(fileInput);
 
 const { textarea, input } = useTextareaAutosize({ watch: props.rcModel });
 
-const selectedTransmiter = ref(
-    props.transmitters.find((transmitter) => transmitter.id == props.rcModel.transmitter_id)
-);
-
-const selectedEngine = props.engines['0'];
-const selectedPropeller = props.propellers['0'];
-const selectedBattery = props.batteries['0'];
+const selectedTransmiter = ref(props.transmitters.find((transmitter) => transmitter.id == props.rcModel.transmitter_id));
+const selectedEngine = ref(props.engines['0']);
+const selectedPropeller = ref(props.propellers['0']);
+const selectedBattery = ref(props.batteries['0']);
 
 function removeEngineFromRcModel(index) {
     if (props.rcModel.engines[index].pivot.quantity > 1) {
@@ -163,8 +161,8 @@ function updateImage(id) {
                 toast.success('Image mise à jour!');
             },
             onError: () => {
-                toast.error('Une erreur est survenue lors de la mise à jour de l\'image.');
-            }
+                toast.error("Une erreur est survenue lors de la mise à jour de l'image.");
+            },
         });
     }
 }
@@ -842,9 +840,13 @@ function updateImage(id) {
                                                                                                     selectedBattery
                                                                                                         ? 'font-semibold'
                                                                                                         : 'font-normal',
-                                                                                                    'ml-3 block truncate',
+                                                                                                    'ml-3 truncate flex gap-2',
                                                                                                 ]"
-                                                                                                >{{
+                                                                                                ><StarIcon
+                                                                                                    v-if="
+                                                                                                        battery.user_id
+                                                                                                    "
+                                                                                                    class="w-4" />{{
                                                                                                     battery.cells +
                                                                                                     's ' +
                                                                                                     battery.capacity +
