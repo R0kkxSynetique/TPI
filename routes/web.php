@@ -4,9 +4,11 @@ use App\Http\Controllers\RcModelController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BatteryController;
 use App\Http\Controllers\EngineController;
+use App\Http\Controllers\QRCodeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,4 +56,6 @@ Route::middleware([
         Route::get('/engines', 'index')->name('index');
         Route::get('/image/engine/{engineId}', 'getEngineImage');
     });
+
+    Route::get('/qr-code/{rcModelId}', [QRCodeController::class, 'downloadQr'])->name('qr-code');
 });

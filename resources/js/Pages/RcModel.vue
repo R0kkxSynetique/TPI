@@ -74,7 +74,7 @@ function destroy(id) {
                         leave-to-class="transform scale-95 opacity-0">
                         <MenuItems
                             class="absolute right-0 z-10 mt-2 origin-top-right bg-white rounded-md shadow-lg w-fit">
-                            <div class="py-1">
+                            <div class="py-1 [&>*]:text-center">
                                 <MenuItem v-slot="{ active }">
                                     <Link
                                         :href="'/rc-models/' + rcModel.id + '/edit'"
@@ -94,6 +94,16 @@ function destroy(id) {
                                         ]">
                                         Supprimer
                                     </button>
+                                </MenuItem>
+                                <MenuItem v-slot="{ active }">
+                                    <a
+                                        :href="'/qr-code/' + rcModel.id"
+                                        :class="[
+                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                            'block px-4 py-2 text-sm',
+                                        ]">
+                                        Imprimer QR
+                                    </a>
                                 </MenuItem>
                             </div>
                         </MenuItems>
