@@ -11,7 +11,7 @@ class QRCodeController extends Controller
     public function downloadQr($rcModelId)
     {
         $path = storage_path('app/QRCodes/') . $rcModelId . ".svg";
-        $url = 'Http://192.168.17.69/rc-models/'. $rcModelId;
+        $url = env('APP_URL') . '/rc-models/'. $rcModelId;
         $headers = array(
             'Content-Type: image/svg+xml',
         );
