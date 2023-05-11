@@ -46,8 +46,7 @@ function destroy(id) {
     if (id) {
         router.delete('/rc-models/' + id);
     } else {
-        //? implement toasts
-        alert('Une erreur est survenue lors de la suppression de votre modèle.');
+        toast.error('Une erreur est survenue lors de la suppression de votre modèle.');
     }
 }
 </script>
@@ -213,9 +212,9 @@ function destroy(id) {
             <div v-if="rcModel.engines.length > 0">
                 <div v-if="rcModel.engines.length > 1">
                     <p>Moteurs:</p>
-                    <!-- todo: Do it as one line with a coma to separate the engines -->
+                    <!-- //todo: Do it as one line with a coma to separate the engines -->
                     <p v-for="engine in rcModel.engines">
-                        {{ engine.pivot.quantity + 'x ' + engine.name + ' ' + engine.power }}
+                    {{ engine.pivot.quantity + 'x ' + engine.name + ' ' + (engine.power || "") }}
                     </p>
                 </div>
                 <div v-else-if="rcModel.engines[0].pivot.quantity > 1">
@@ -226,22 +225,22 @@ function destroy(id) {
                             'x ' +
                             rcModel.engines[0].name +
                             ' ' +
-                            rcModel.engines[0].power
+                            (rcModel.engines[0].power || "")
                         }}
                     </p>
                 </div>
                 <div v-else>
                     <p>
                         Moteur:
-                        {{ rcModel.engines[0].name + ' ' + rcModel.engines[0].power }}
+                        {{ rcModel.engines[0].name + ' ' + (rcModel.engines[0].power || "") }}
                     </p>
                 </div>
-                <div>
+                <div v-if="rcModel.engines[0].type">
                     <p>
                         Type:
                         {{ rcModel.engines[0].type }}
                     </p>
-                    <!-- todo: select the type based on all the engines -->
+                    <!-- //todo: select the type based on all the engines -->
                 </div>
             </div>
             <div v-if="rcModel.propellers.length > 0">

@@ -388,7 +388,7 @@ function updateImage(id) {
                             class="flex items-center gap-1 px-2 py-1 rounded-full bg-app-secondary w-fit"
                             v-for="n in engine.pivot.quantity">
                             <p class="whitespace-nowrap">
-                                {{ engine.name + ' ' + engine.power }}
+                                {{ engine.name + ' ' + (engine.power || "") }}
                             </p>
                             <CrossIcon @click="removeEngineFromRcModel(index)" />
                         </div>
@@ -446,7 +446,7 @@ function updateImage(id) {
                                                                                 <span>{{
                                                                                     selectedEngine.name +
                                                                                     ' ' +
-                                                                                    selectedEngine.power
+                                                                                    (selectedEngine.power || "")
                                                                                 }}</span>
                                                                             </span>
                                                                             <span
@@ -495,7 +495,7 @@ function updateImage(id) {
                                                                                                     class="w-4" />{{
                                                                                                     engine.name +
                                                                                                     ' ' +
-                                                                                                    engine.power
+                                                                                                    (engine.power || "")
                                                                                                 }}</span
                                                                                             >
                                                                                         </div>

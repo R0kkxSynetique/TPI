@@ -3,6 +3,7 @@
 use App\Http\Controllers\RcModelController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BatteryController;
+use App\Http\Controllers\EngineController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,6 +30,7 @@ Route::middleware([
         'rc-models' => 'App\Http\Controllers\RcModelController',
         'user' => 'App\Http\Controllers\UserController',
         'batteries' => 'App\Http\Controllers\BatteryController',
+        'engines' => 'App\Http\Controllers\EngineController',
     ]);
 
     Route::name('user.')->controller(UserController::class)->group(function () {
@@ -46,5 +48,10 @@ Route::middleware([
 
     Route::name('batteries.')->controller(BatteryController::class)->group(function () {
         Route::get('/batteries', 'index')->name('index');
+    });
+
+    Route::name('engines.')->controller(EngineController::class)->group(function () {
+        Route::get('/engines', 'index')->name('index');
+        Route::get('/image/engine/{engineId}', 'getEngineImage');
     });
 });

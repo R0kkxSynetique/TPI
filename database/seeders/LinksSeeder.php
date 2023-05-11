@@ -100,6 +100,11 @@ class LinksSeeder extends Seeder
                 'quantity' => 3
             ],
             [
+                'rc_model_id' => 3,
+                'battery_id' => 1,
+                'quantity' => 2
+            ],
+            [
                 'rc_model_id' => 4,
                 'battery_id' => 1,
                 'quantity' => 2
