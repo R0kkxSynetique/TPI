@@ -74,40 +74,42 @@ if (message){
                 </Link>
             </div>
         </div>
-        <div v-for="engine in engines" class="py-10 px-5 shadow-lg h-56 rounded-[3rem] mx-2">
-            <div class="flex justify-between py-2">
-                <Link as="h1" :href="'/engines/' + engine.id" class="max-w-full text-xl truncate text-app">{{
-                    engine.name
-                }}</Link>
+        <div class="grid grid-cols-1 gap-3 mx-5 md:grid-cols-5">
+            <div v-for="engine in engines" class="py-10 px-5 shadow-lg h-56 rounded-[3rem] mb-2 last:mb-4">
+                <div class="flex justify-between py-2">
+                    <span as="h1" class="max-w-full text-xl truncate text-app">{{
+                        engine.name
+                    }}</span>
+                </div>
+                <div class="grid justify-between grid-cols-2">
+                    <div class="aspect-square w-32 rounded-[2rem] overflow-hidden">
+                        <img
+                            :src="`/image/engine/${engine.id}`"
+                            :alt="engine.name"
+                            class="object-cover w-full h-full" />
+                    </div>
+                    <div class="flex flex-col justify-evenly">
+                        <div v-if="engine.power" class="flex items-center [&>*]:mx-1">
+                            <BoltIcon class="w-5 fill-app" />
+                            <p>
+                                {{ engine.power + "cc"}}
+                            </p>
+                        </div>
+                        <div v-if="engine.fuel" class="flex items-center [&>*]:mx-1">
+                            <GasIcon class="w-5 mx-0 fill-app" />
+                            <p class="flex-1 truncate">
+                                {{ engine.fuel }}
+                            </p>
+                        </div>
+                        <div v-if="engine.frequency" class="flex items-center [&>*]:mx-1">
+                            <ArrowPathIcon class="w-5 fill-app" />
+                            <p class="flex-1 truncate">
+                                {{ engine.frequency }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <Link as="div" :href="'/engines/' + engine.id" class="flex justify-between">
-                <div class="aspect-square w-32 rounded-[2rem] overflow-hidden">
-                    <img
-                        :src="`/image/engine/${engine.id}`"
-                        :alt="engine.name"
-                        class="object-cover w-full h-full" />
-                </div>
-                <div class="flex flex-col justify-evenly">
-                    <div class="flex items-center [&>*]:mx-1">
-                        <BoltIcon class="w-5 fill-app" />
-                        <p>
-                            {{ engine.power }}
-                        </p>
-                    </div>
-                    <div class="flex items-center [&>*]:mx-1">
-                        <GasIcon class="w-5 fill-app" />
-                        <p>
-                            {{ engine.type }}
-                        </p>
-                    </div>
-                    <div class="flex items-center [&>*]:mx-1">
-                        <ArrowPathIcon class="w-5 fill-app" />
-                        <p>
-                            {{ engine.frequency }}
-                        </p>
-                    </div>
-                </div>
-            </Link>
         </div>
     </div>
 </template>

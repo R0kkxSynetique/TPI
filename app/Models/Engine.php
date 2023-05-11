@@ -12,6 +12,16 @@ class Engine extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'power',
+        'frequency',
+        'type',
+        'weight',
+        'fuel',
+        'user_id'
+    ];
+
     public function rcModel(): BelongsToMany
     {
         return $this->belongsToMany(RcModel::class, "rc_models_has_engines")->withPivot('quantity');

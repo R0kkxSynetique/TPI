@@ -21,7 +21,7 @@ defineProps({
 const message = computed(() => usePage().props.flash.message).value;
 const type = computed(() => usePage().props.flash.type).value;
 
-if (message){
+if (message) {
     switch (type) {
         case 'success':
             toast.success(message);
@@ -33,7 +33,6 @@ if (message){
             toast(message);
     }
 }
-
 </script>
 
 <template>
@@ -77,11 +76,16 @@ if (message){
                 </Link>
             </div>
         </div>
-        <div v-for="rcModel in rcModels" class="py-10 px-5 mx-2 shadow-lg h-[14rem] rounded-[3rem] last:mb-4">
+        <div
+            v-for="rcModel in rcModels"
+            class="py-10 px-5 mx-2 shadow-lg h-[14rem] rounded-[3rem] last:mb-4">
             <div class="flex justify-between py-2">
-                <Link as="h1" :href="'/rc-models/' + rcModel.id" class="max-w-full text-xl truncate text-app">{{
-                    rcModel.name
-                }}</Link>
+                <Link
+                    as="h1"
+                    :href="'/rc-models/' + rcModel.id"
+                    class="max-w-full text-xl truncate text-app"
+                    >{{ rcModel.name }}</Link
+                >
             </div>
             <Link as="div" :href="'/rc-models/' + rcModel.id" class="flex justify-between">
                 <div class="aspect-square w-32 rounded-[2rem] overflow-hidden">
@@ -106,10 +110,10 @@ if (message){
                             </p>
                         </div>
                     </div>
-                    <div>
-                        <div v-for="engine in rcModel.engines" class="flex items-center [&>*]:mx-1">
+                    <div v-for="engine in rcModel.engines">
+                        <div v-if="engine.fuel" class="flex items-center [&>*]:mx-1">
                             <GasIcon />
-                            <p>{{ engine.type }}</p>
+                            <p>{{ engine.fuel }}</p>
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Engine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\File;
 
 class EngineController extends Controller
 {
@@ -23,7 +25,7 @@ class EngineController extends Controller
      */
     public function create()
     {
-        //
+        return inertia("EngineCreation");
     }
 
     /**
@@ -31,7 +33,40 @@ class EngineController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // * Validation of the image
+        request()->validate([
+            'image' => [
+                'required',
+                File::image()
+                    ->max(12 * 1024)
+            ]
+        ]);
+
+        // * Getting the engine data from the request
+        $input = collect(request()->get('engine'));
+
+        // * Replacing the user id placeholder in the engine
+        $input->put('user_id', Auth::user()->id);
+
+        // * Creating the engine in the database
+        $engine = DB::transaction(function () use ($input) {
+            $engine = Engine::create($input->only([
+                'name',
+                'power',
+                'frequency',
+                'type',
+                'weight',
+                'fuel',
+                'user_id'
+            ])->toArray());
+            return $engine;
+        });
+
+        // * Storing the image named after the engine id
+        request()->file('image')->storeAs("EnginesImages", $engine->id . ".jpg");
+
+        // * Redirecting to the engines
+        return redirect()->route('engines.index')->with(['message' => 'Votre moteur à été crée avec succès', 'type' => 'success']);
     }
 
     /**
@@ -64,5 +99,19 @@ class EngineController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * Get the engine image.
+     * @param string $engineId
+     * @return \Illuminate\Http\Response
+     */
+    public function getEngineImage(string $engineId)
+    {
+        // * Getting the image from the storage
+        $filepath = storage_path("/app/EnginesImages/{$engineId}.jpg");
+
+        // * Returning the image
+        return response()->file($filepath);
     }
 }
