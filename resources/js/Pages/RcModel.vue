@@ -16,6 +16,7 @@ import {
 import moment from 'moment';
 import { ref, computed } from 'vue';
 import { useToast } from 'vue-toastification';
+import print from 'print-js';
 
 const message = computed(() => usePage().props.flash.message).value;
 const type = computed(() => usePage().props.flash.type).value;
@@ -24,12 +25,12 @@ const openDelete = ref(false);
 
 const toast = useToast();
 
-defineProps({
+const props = defineProps({
     rcModel: Object,
     flights: Object,
 });
 
-if (message){
+if (message) {
     switch (type) {
         case 'success':
             toast.success(message);
@@ -48,6 +49,10 @@ function destroy(id) {
     } else {
         toast.error('Une erreur est survenue lors de la suppression de votre modèle.');
     }
+}
+
+function printQr() {
+    printJS('/qr-code/' + props.rcModel.id, 'image');
 }
 </script>
 <template>
@@ -96,14 +101,14 @@ function destroy(id) {
                                     </button>
                                 </MenuItem>
                                 <MenuItem v-slot="{ active }">
-                                    <a
-                                        :href="'/qr-code/' + rcModel.id"
+                                    <button
+                                        @click="printQr()"
                                         :class="[
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm',
                                         ]">
                                         Imprimer QR
-                                    </a>
+                                    </button>
                                 </MenuItem>
                             </div>
                         </MenuItems>
@@ -224,7 +229,9 @@ function destroy(id) {
                     <p>Moteurs:</p>
                     <!-- //todo: Do it as one line with a coma to separate the engines -->
                     <p v-for="engine in rcModel.engines">
-                    {{ engine.pivot.quantity + 'x ' + engine.name + ' ' + (engine.power || "") }}
+                        {{
+                            engine.pivot.quantity + 'x ' + engine.name + ' ' + (engine.power || '')
+                        }}
                     </p>
                 </div>
                 <div v-else-if="rcModel.engines[0].pivot.quantity > 1">
@@ -235,14 +242,14 @@ function destroy(id) {
                             'x ' +
                             rcModel.engines[0].name +
                             ' ' +
-                            (rcModel.engines[0].power || "")
+                            (rcModel.engines[0].power || '')
                         }}
                     </p>
                 </div>
                 <div v-else>
                     <p>
                         Moteur:
-                        {{ rcModel.engines[0].name + ' ' + (rcModel.engines[0].power || "") }}
+                        {{ rcModel.engines[0].name + ' ' + (rcModel.engines[0].power || '') }}
                     </p>
                 </div>
                 <div v-if="rcModel.engines[0].type">

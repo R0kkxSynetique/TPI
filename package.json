@@ -23,6 +23,7 @@
         "@vueuse/core": "^9.13.0",
         "moment": "^2.29.4",
         "prettier": "^2.8.7",
+        "print-js": "^1.6.0",
         "vue-toastification": "^2.0.0-rc.5"
     }
 }
