@@ -126,11 +126,12 @@ class RcModelController extends Controller
      * @param string $id
      * @return \Inertia\Response
      */
-    public function show(string $id)
+    public function show(string $rcModelId, bool $guest = false)
     {
         return inertia("RcModel", [
-            'rc-model' => RcModel::with(['engines', 'batteries', 'propellers', 'transmitter'])->where('id', "=", $id)->first(),
-            'flights' => $this->getRcModelFlights($id),
+            'rc-model' => RcModel::with(['engines', 'batteries', 'propellers', 'transmitter'])->where('id', "=", $rcModelId)->first(),
+            'flights' => $this->getRcModelFlights($rcModelId),
+            'guest' => $guest,
         ]);
     }
 
@@ -275,5 +276,17 @@ class RcModelController extends Controller
 
         // * Returning the image
         return response()->file($filepath);
+    }
+
+    public function guest(string $rcModelId)
+    {
+        if (request()->token) {
+            $rcModel = RcModel::where('id', $rcModelId)->first();
+            if ($rcModel->identification_token == request()->token) {
+                return $this->show($rcModelId, true);
+            } else {
+                return ("Token failed");
+            }
+        }
     }
 }

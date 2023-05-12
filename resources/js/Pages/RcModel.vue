@@ -28,6 +28,7 @@ const toast = useToast();
 const props = defineProps({
     rcModel: Object,
     flights: Object,
+    guest: Boolean,
 });
 
 if (message) {
@@ -41,6 +42,24 @@ if (message) {
         default:
             toast(message);
     }
+}
+
+if (props.guest){
+    toast.info('Rejoignez nous sur Aeromodel!', {
+        position: 'top-right',
+        timeout: false,
+        closeOnClick: false,
+        pauseOnFocusLoss: true,
+        pauseOnHover: false,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: false,
+        closeButton: 'button',
+        icon: true,
+        rtl: false,
+    });
+    //todo : add a link to the register page
 }
 
 function destroy(id) {
@@ -62,8 +81,8 @@ function printQr() {
         class="h-[14rem] rounded-b-[4rem] bg-gradient-to-br from-gradientfrom to-gradientto text-white text-2xl w-full">
         <div>
             <div class="flex items-center justify-between px-8 pt-8">
-                <SideBarMenu />
-                <Menu as="div" class="relative inline-block text-left">
+                <SideBarMenu v-if="!props.guest"/>
+                <Menu as="div" class="relative inline-block text-left" v-if="!props.guest">
                     <div>
                         <MenuButton class="p-3">
                             <MoreIcon />

@@ -44,7 +44,6 @@ Route::middleware([
 
     Route::name('rc-models.')->controller(RcModelController::class)->group(function () {
         Route::get('/', 'index')->name('/');
-        Route::get('/image/rcModel/{rcModelId}', 'getRcModelImage');
         Route::post('/image/rcModel/{rcModelId}', 'updateImage');
     });
 
@@ -57,5 +56,12 @@ Route::middleware([
         Route::get('/image/engine/{engineId}', 'getEngineImage');
     });
 
-    Route::get('/qr-code/{rcModelId}', [QRCodeController::class, 'downloadQr'])->name('qr-code');
+    Route::name('qr-codes.')->controller(QRCodeController::class)->group(function () {
+        Route::get('/qr-code/{rcModelId}', 'downloadQr')->name('qr-code');
+    });
+});
+
+Route::name('rc-models.')->controller(RcModelController::class)->group(function () {
+    Route::get('/rc-models/{rcModelId}/guest', 'guest')->name('rc-models');
+    Route::get('/image/rcModel/{rcModelId}', 'getRcModelImage');
 });
