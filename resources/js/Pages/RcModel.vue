@@ -14,9 +14,10 @@ import {
     TransitionRoot,
 } from '@headlessui/vue';
 import moment from 'moment';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useToast } from 'vue-toastification';
 import print from 'print-js';
+import JoinAM from '@/Components/JoinAM.vue';
 
 const message = computed(() => usePage().props.flash.message).value;
 const type = computed(() => usePage().props.flash.type).value;
@@ -44,23 +45,31 @@ if (message) {
     }
 }
 
-if (props.guest){
-    toast.info('Rejoignez nous sur Aeromodel!', {
-        position: 'top-right',
-        timeout: false,
-        closeOnClick: false,
-        pauseOnFocusLoss: true,
-        pauseOnHover: false,
-        draggable: true,
-        draggablePercent: 0.6,
-        showCloseButtonOnHover: false,
-        hideProgressBar: false,
-        closeButton: 'button',
-        icon: true,
-        rtl: false,
-    });
-    //todo : add a link to the register page
+function joinAmToast() {
+    if (props.guest){
+        toast.info(JoinAM, {
+            position: 'top-right',
+            timeout: false,
+            closeOnClick: false,
+            pauseOnFocusLoss: true,
+            pauseOnHover: false,
+            draggable: true,
+            draggablePercent: 0.6,
+            showCloseButtonOnHover: false,
+            hideProgressBar: false,
+            closeButton: 'button',
+            icon: true,
+            rtl: false,
+            id: 'join-am',
+        });
+    }
 }
+
+onMounted(() => {
+    requestAnimationFrame(() => {
+        joinAmToast()
+    });
+});
 
 function destroy(id) {
     if (id) {
@@ -81,7 +90,7 @@ function printQr() {
         class="h-[14rem] rounded-b-[4rem] bg-gradient-to-br from-gradientfrom to-gradientto text-white text-2xl w-full">
         <div>
             <div class="flex items-center justify-between px-8 pt-8">
-                <SideBarMenu v-if="!props.guest"/>
+                <SideBarMenu v-if="!props.guest" />
                 <Menu as="div" class="relative inline-block text-left" v-if="!props.guest">
                     <div>
                         <MenuButton class="p-3">
