@@ -14,8 +14,10 @@ import {
     TransitionRoot,
 } from '@headlessui/vue';
 import moment from 'moment';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useToast } from 'vue-toastification';
+import print from 'print-js';
+import JoinAM from '@/Components/JoinAM.vue';
 
 const message = computed(() => usePage().props.flash.message).value;
 const type = computed(() => usePage().props.flash.type).value;
@@ -24,12 +26,13 @@ const openDelete = ref(false);
 
 const toast = useToast();
 
-defineProps({
+const props = defineProps({
     rcModel: Object,
     flights: Object,
+    guest: Boolean,
 });
 
-if (message){
+if (message) {
     switch (type) {
         case 'success':
             toast.success(message);
@@ -42,12 +45,42 @@ if (message){
     }
 }
 
+function joinAmToast() {
+    if (props.guest){
+        toast.info(JoinAM, {
+            position: 'top-right',
+            timeout: false,
+            closeOnClick: false,
+            pauseOnFocusLoss: true,
+            pauseOnHover: false,
+            draggable: true,
+            draggablePercent: 0.6,
+            showCloseButtonOnHover: false,
+            hideProgressBar: false,
+            closeButton: 'button',
+            icon: true,
+            rtl: false,
+            id: 'join-am',
+        });
+    }
+}
+
+onMounted(() => {
+    requestAnimationFrame(() => {
+        joinAmToast()
+    });
+});
+
 function destroy(id) {
     if (id) {
         router.delete('/rc-models/' + id);
     } else {
         toast.error('Une erreur est survenue lors de la suppression de votre modèle.');
     }
+}
+
+function printQr() {
+    printJS('/qr-code/' + props.rcModel.id, 'image');
 }
 </script>
 <template>
@@ -57,8 +90,8 @@ function destroy(id) {
         class="h-[14rem] rounded-b-[4rem] bg-gradient-to-br from-gradientfrom to-gradientto text-white text-2xl w-full">
         <div>
             <div class="flex items-center justify-between px-8 pt-8">
-                <SideBarMenu />
-                <Menu as="div" class="relative inline-block text-left">
+                <SideBarMenu v-if="!props.guest" />
+                <Menu as="div" class="relative inline-block text-left" v-if="!props.guest">
                     <div>
                         <MenuButton class="p-3">
                             <MoreIcon />
@@ -74,7 +107,7 @@ function destroy(id) {
                         leave-to-class="transform scale-95 opacity-0">
                         <MenuItems
                             class="absolute right-0 z-10 mt-2 origin-top-right bg-white rounded-md shadow-lg w-fit">
-                            <div class="py-1">
+                            <div class="py-1 [&>*]:text-center">
                                 <MenuItem v-slot="{ active }">
                                     <Link
                                         :href="'/rc-models/' + rcModel.id + '/edit'"
@@ -93,6 +126,16 @@ function destroy(id) {
                                             'block px-4 py-2 text-sm',
                                         ]">
                                         Supprimer
+                                    </button>
+                                </MenuItem>
+                                <MenuItem v-slot="{ active }">
+                                    <button
+                                        @click="printQr()"
+                                        :class="[
+                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                            'block px-4 py-2 text-sm',
+                                        ]">
+                                        Imprimer QR
                                     </button>
                                 </MenuItem>
                             </div>
@@ -214,7 +257,9 @@ function destroy(id) {
                     <p>Moteurs:</p>
                     <!-- //todo: Do it as one line with a coma to separate the engines -->
                     <p v-for="engine in rcModel.engines">
-                    {{ engine.pivot.quantity + 'x ' + engine.name + ' ' + (engine.power || "") }}
+                        {{
+                            engine.pivot.quantity + 'x ' + engine.name + ' ' + (engine.power || '')
+                        }}
                     </p>
                 </div>
                 <div v-else-if="rcModel.engines[0].pivot.quantity > 1">
@@ -225,14 +270,14 @@ function destroy(id) {
                             'x ' +
                             rcModel.engines[0].name +
                             ' ' +
-                            (rcModel.engines[0].power || "")
+                            (rcModel.engines[0].power || '')
                         }}
                     </p>
                 </div>
                 <div v-else>
                     <p>
                         Moteur:
-                        {{ rcModel.engines[0].name + ' ' + (rcModel.engines[0].power || "") }}
+                        {{ rcModel.engines[0].name + ' ' + (rcModel.engines[0].power || '') }}
                     </p>
                 </div>
                 <div v-if="rcModel.engines[0].type">
