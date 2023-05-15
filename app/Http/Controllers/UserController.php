@@ -39,6 +39,24 @@ class UserController extends Controller
         });
     }
 
+    public function destroy(string $userId)
+    {
+        // * Get the user from the database
+        $user = User::find($userId);
+
+        // * Delete the user image
+        if ($user->profile_photo_path != null) {
+            unlink(storage_path($user->profile_photo_path));
+        }
+        
+        // * Delete the user from the database
+        $user->delete();
+    }
+
+    public function changePassword(){
+        return inertia("UserPasswordUpdate");
+    }
+
     /**
      * Get the user image.
      * @param string $userId
