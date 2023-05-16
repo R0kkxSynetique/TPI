@@ -125,7 +125,7 @@ const submit = () => {
                         </div>
                     </div>
                     <div
-                        class="grid items-center justify-center grid-cols-2 gap-3 place-items-center">
+                        class="grid items-center justify-center grid-cols-1 gap-3 md:grid-cols-2 place-items-center">
                         <button
                             id="saveButton"
                             class="flex items-center justify-center w-full py-5 transition-all rounded-full shadow-lg drop-shadow text-app">

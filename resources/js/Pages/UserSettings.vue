@@ -127,7 +127,7 @@ const submit = () => {
                             class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
                     </div>
                     <div
-                        class="grid items-center justify-center grid-cols-2 gap-3 place-items-center">
+                        class="grid items-center justify-center grid-cols-1 gap-3 md:grid-cols-2 place-items-center">
                         <button
                             id="saveButton"
                             class="flex items-center justify-center transition-all rounded-full shadow-lg drop-shadow text-app disabled:bg-slate-200 disabled:text-gray-500 disabled:cursor-not-allowed disabled:opacity-60"
