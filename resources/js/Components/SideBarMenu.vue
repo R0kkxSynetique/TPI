@@ -106,7 +106,7 @@ defineProps({
                     <Link
                         class="flex items-center w-full hover:bg-slate-100"
                         :class="{ 'bg-slate-200': route().current('user.settings.*') }"
-                        href="/user/settings">
+                        :href="'/user/' + user.id + '/edit'">
                         <div class="flex items-center justify-center gap-2 py-3 ml-10">
                             <Cog6ToothIcon class="h-5" />
                             <p>Mes paramètres</p>
