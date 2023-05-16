@@ -49,7 +49,7 @@ function destroy(id) {
 }
 
 const submit = () => {
-    form.put(`/user/${user.id}/settings`);
+    form.put(`/user/${user.id}`);
 };
 </script>
 <template>
@@ -145,7 +145,7 @@ const submit = () => {
                             <CheckIcon v-else class="absolute z-10 text-white w-7" />
                         </button>
                         <Link
-                            href="/user/change-password"
+                            :href="'/user/' + user.id + '/change-password'"
                             class="flex items-center justify-center w-full py-5 transition-all rounded-full shadow-lg text-app drop-shadow">
                             <p>Changer de mot de passe</p>
                         </Link>

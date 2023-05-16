@@ -36,11 +36,9 @@ Route::middleware([
     ]);
 
     Route::name('user.')->controller(UserController::class)->group(function () {
-        Route::get('/user/settings', 'index')->name('index');
         Route::get('/image/user/{userId}', 'getUserImage');
         Route::post('/image/user/{userId}', 'updateImage');
-        Route::put('/user/{user}/settings', 'update')->name('settings');
-        Route::get('/user/change-password', 'changePassword')->name('change-password');
+        Route::get('user/{userId}/change-password', 'changePassword');
     });
 
     Route::name('rc-models.')->controller(RcModelController::class)->group(function () {

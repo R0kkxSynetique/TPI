@@ -14,6 +14,8 @@ return [
     */
 
     'failed' => 'Ces informations d\'identification ne correspondent pas à nos enregistrements.',
+    'current_password' => 'Le mot de passe actuel fourni est incorrect.',
+    'confirm_password' => 'Les deux mot de passe ne sont pas les mêmes.',
     'password' => 'Le mot de passe fourni est incorrect.',
     'throttle' => 'Trop de tentatives de connexion. Veuillez essayer de nouveau dans :seconds secondes.',
 

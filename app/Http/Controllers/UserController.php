@@ -11,17 +11,52 @@ use Illuminate\Validation\Rules\File;
 class UserController extends Controller
 {
     /**
-     * Display the user settings page.
-     * @return \Inertia\Response
+     * Display a listing of the resource.
      */
-    public function show()
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
         return inertia("UserSettings");
     }
 
+    public function changePassword()
+    {
+        return inertia("PasswordUpdate");
+    }
+
     /**
-     * Update the user settings.
-     * @param User $user
+     * Update the specified resource in storage.
      */
     public function update(User $user)
     {
@@ -39,6 +74,9 @@ class UserController extends Controller
         });
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(string $userId)
     {
         // * Get the user from the database
@@ -51,10 +89,6 @@ class UserController extends Controller
         
         // * Delete the user from the database
         $user->delete();
-    }
-
-    public function changePassword(){
-        return inertia("UserPasswordUpdate");
     }
 
     /**
