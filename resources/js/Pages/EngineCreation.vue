@@ -2,18 +2,14 @@
 import { Head, useForm } from '@inertiajs/vue3';
 import SideBarMenu from '@/Components/SideBarMenu.vue';
 import Button from '@/Components/Button.vue';
-import { useTextareaAutosize } from '@vueuse/core';
-import CrossIcon from '@/Components/icons/CrossIcon.vue';
 import { ref } from 'vue';
-import { PhotoIcon, PlusIcon, CheckIcon, ChevronDownIcon, StarIcon } from '@heroicons/vue/20/solid';
+import { PhotoIcon, CheckIcon, ChevronDownIcon } from '@heroicons/vue/20/solid';
 import {
     Listbox,
     ListboxButton,
-    ListboxLabel,
     ListboxOption,
     ListboxOptions,
 } from '@headlessui/vue';
-import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
 import { useImagePreview } from '../lib/image';
 import { useToast } from 'vue-toastification';
 

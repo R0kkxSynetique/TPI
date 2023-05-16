@@ -7,10 +7,6 @@ import { ref } from 'vue';
 import { CheckIcon } from '@heroicons/vue/20/solid';
 import { useToast } from 'vue-toastification';
 import {
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems,
     Dialog,
     DialogPanel,
     DialogTitle,
@@ -58,7 +54,7 @@ const submit = () => {
     <div class="relative min-w-full min-h-screen mb-5">
         <div>
             <div class="relative z-50 flex justify-between w-full px-8 pt-8">
-                <SideBarMenu menu-icon-class="text-app" />
+                <SideBarMenu />
             </div>
         </div>
         <div class="flex flex-col gap-4 mx-10 mt-3">

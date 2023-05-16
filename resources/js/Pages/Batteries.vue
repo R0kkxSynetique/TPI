@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
-import SideBarMenu from '@/Components/SideBarMenu.vue';
+import PageHeader from '@/Components/PageHeader.vue';
 import {
     TagIcon,
     Battery100Icon,
@@ -25,6 +25,7 @@ import {
     ListboxOptions,
 } from '@headlessui/vue';
 import { useToast } from 'vue-toastification';
+import AddButton from '../Components/AddButton.vue';
 
 const user = usePage().props.auth.user;
 
@@ -76,27 +77,16 @@ const submit = () => {
     <Head title="Accueil" />
 
     <div class="relative min-w-full min-h-screen">
-        <div
-            class="h-56 rounded-b-[4rem] bg-gradient-to-br from-gradientfrom to-gradientto text-white text-2xl">
-            <div class="relative z-50 flex justify-between w-full px-8 pt-8">
-                <SideBarMenu />
-                <div class="w-12 h-12">
-                    <img
-                        :src="`/image/user/${user.id}`"
-                        class="object-cover w-20 overflow-hidden rounded-full aspect-square" />
-                </div>
-            </div>
-            <div class="flex items-center justify-between">
-                <h1 class="pt-10 pl-12">Mes<br/>batteries</h1>
-                <button
-                    v-if="batteries.length > 0"
-                    @click="openCreate = true"
-                    class="flex items-center justify-center gap-2 mt-10 mr-8">
-                    <PlusIcon class="w-5 fill-white" />
-                    <p>Créer</p>
-                </button>
-            </div>
-        </div>
+        <PageHeader>
+            <template #title>
+                <p>Mes<br />batteries</p>
+            </template>
+            <template #button>
+                <AddButton v-if="batteries.length > 0" @click="openCreate = true" href="/batteries">
+                    <template #button-text>Créer</template>
+                </AddButton>
+            </template>
+        </PageHeader>
         <div v-if="batteries.length <= 0">
             <div class="flex items-center justify-center mt-5">
                 <p>Vous n'avez pas encore de batteries.<br />Créez-en une en cliquant ci-dessous</p>
