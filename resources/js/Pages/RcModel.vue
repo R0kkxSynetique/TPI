@@ -18,6 +18,7 @@ import { ref, computed, onMounted } from 'vue';
 import { useToast } from 'vue-toastification';
 import print from 'print-js';
 import JoinAM from '@/Components/JoinAM.vue';
+import { EllipsisHorizontalIcon } from '@heroicons/vue/20/solid';
 
 const message = computed(() => usePage().props.flash.message).value;
 const type = computed(() => usePage().props.flash.type).value;
@@ -46,7 +47,7 @@ if (message) {
 }
 
 function joinAmToast() {
-    if (props.guest){
+    if (props.guest) {
         toast.info(JoinAM, {
             position: 'top-right',
             timeout: false,
@@ -67,7 +68,7 @@ function joinAmToast() {
 
 onMounted(() => {
     requestAnimationFrame(() => {
-        joinAmToast()
+        joinAmToast();
     });
 });
 
@@ -87,14 +88,14 @@ function printQr() {
     <Head :title="rcModel.name ? rcModel.name : 'Modèle réduit'"></Head>
 
     <div
-        class="h-[14rem] rounded-b-[4rem] bg-gradient-to-br from-gradientfrom to-gradientto text-white text-2xl w-full">
+        class="h-56 md:h-[22rem] rounded-b-[4rem] bg-gradient-to-br from-gradientfrom to-gradientto text-white text-2xl w-full">
         <div>
             <div class="flex items-center justify-between px-8 pt-8">
                 <SideBarMenu v-if="!props.guest" />
                 <Menu as="div" class="relative inline-block text-left" v-if="!props.guest">
                     <div>
-                        <MenuButton class="p-3">
-                            <MoreIcon />
+                        <MenuButton>
+                            <EllipsisHorizontalIcon class="w-8 md:w-12" />
                         </MenuButton>
                     </div>
 
@@ -143,9 +144,15 @@ function printQr() {
                     </transition>
                 </Menu>
             </div>
-            <div class="flex items-center justify-center w-full -mt-6">
+            <!-- <div class="flex items-center justify-center w-full -mt-6 md:-mt-12">
                 <img
-                    class="aspect-square w-40 rounded-[2rem] overflow-hidden object-cover"
+                    class="aspect-square w-40 md:w-72 rounded-[2rem] overflow-hidden object-cover"
+                    :src="`/image/rcModel/${rcModel.id}`"
+                    :alt="rcModel.name" />
+            </div> -->
+            <div class="flex items-center justify-center w-full -mt-6 md:-mt-12">
+                <img
+                    class="rounded-[2rem] object-cover align-middle max-w-full md:h-72 aspect-square md:aspect-auto h-40"
                     :src="`/image/rcModel/${rcModel.id}`"
                     :alt="rcModel.name" />
             </div>
