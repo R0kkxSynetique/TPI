@@ -84,7 +84,7 @@ if (message) {
                     </div>
                     <div
                         class="flex flex-col justify-evenly md:[&>div>p]:text-3xl md:[&>div>div>p]:text-3xl">
-                        <div class="flex items-center [&>*]:mx-1">
+                        <div v-if="rcModel.transmitter" class="flex items-center [&>*]:mx-1">
                             <TransmitterIcon class="w-7 md:w-10" />
                             <p>
                                 {{

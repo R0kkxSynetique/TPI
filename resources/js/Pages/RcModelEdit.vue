@@ -24,7 +24,6 @@ import {
     StarIcon,
 } from '@heroicons/vue/20/solid';
 import Button from '../Components/Button.vue';
-import RightArrowIcon from '../Components/icons/RightArrowIcon.vue';
 import {
     Listbox,
     ListboxButton,
@@ -49,13 +48,11 @@ const openPropeller = ref(false);
 const openBattery = ref(false);
 const openDelete = ref(false);
 
-const { preview, updatePreview, clearPreview } = useImagePreview(fileInput);
+const { preview, updatePreview } = useImagePreview(fileInput);
 
 const { textarea, input } = useTextareaAutosize({ watch: props.rcModel });
 
-const selectedTransmiter = ref(
-    props.transmitters.find((transmitter) => transmitter.id == props.rcModel.transmitter_id)
-);
+const selectedTransmiter = ref(props.rcModel.transmitter_id ? props.transmitters.find((transmitter) => transmitter.id == props.rcModel.transmitter_id) : props.transmitters['0']);
 const selectedEngine = ref(props.engines['0']);
 const selectedPropeller = ref(props.propellers['0']);
 const selectedBattery = ref(props.batteries['0']);

@@ -212,6 +212,7 @@ const submit = () => {
                             type="number"
                             v-model="form.rcModel.wingSpan"
                             placeholder="2500"
+                            max="100000"
                             class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
                         <div class="absolute right-0 px-8 py-5">mm</div>
                     </div>
@@ -222,6 +223,7 @@ const submit = () => {
                         <input
                             type="number"
                             v-model="form.rcModel.weight"
+                            max="1000000"
                             placeholder="16000"
                             class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
                         <div class="absolute right-0 px-8 py-5">g</div>
@@ -233,6 +235,7 @@ const submit = () => {
                         <input
                             type="number"
                             v-model="form.rcModel.length"
+                            max="100000"
                             placeholder="1700"
                             class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
                         <div class="absolute right-0 px-8 py-5">mm</div>
@@ -244,6 +247,7 @@ const submit = () => {
                         <input
                             type="number"
                             v-model="form.rcModel.height"
+                            max="10000"
                             placeholder="800"
                             class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
                         <div class="absolute right-0 px-8 py-5">mm</div>
