@@ -1,6 +1,5 @@
 <script setup>
 import { Head, Link, useForm, router } from '@inertiajs/vue3';
-import MoreIcon from '@/Components/icons/MoreIcon.vue';
 import SideBarMenu from '@/Components/SideBarMenu.vue';
 import {
     Menu,
@@ -18,6 +17,7 @@ import { ref } from 'vue';
 import {
     CheckIcon,
     ChevronDownIcon,
+    EllipsisHorizontalIcon,
     PlusIcon,
     StarIcon,
 XCircleIcon,
@@ -173,14 +173,14 @@ function updateImage(id) {
     <Head :title="'Edition - ' + rcModel.name"></Head>
 
     <div
-        class="h-60 md:h-[23rem] rounded-b-[4rem] bg-gradient-to-br from-gradientfrom to-gradientto text-white text-2xl w-full">
+        class="h-60 md:h-[24rem] rounded-b-[4rem] bg-gradient-to-br from-gradientfrom to-gradientto text-white text-2xl w-full">
         <div>
             <div class="flex items-center justify-between px-8 pt-8">
                 <SideBarMenu />
                 <Menu as="div" class="relative inline-block text-left">
                     <div>
-                        <MenuButton class="p-3">
-                            <MoreIcon />
+                        <MenuButton>
+                            <EllipsisHorizontalIcon class="w-8 md:w-12" />
                         </MenuButton>
                     </div>
 
@@ -193,7 +193,7 @@ function updateImage(id) {
                         leave-to-class="transform scale-95 opacity-0">
                         <MenuItems
                             class="absolute right-0 z-10 mt-2 origin-top-right bg-white rounded-md shadow-lg w-fit">
-                            <div class="py-1">
+                            <div class="py-1 [&_button]:md:text-2xl">
                                 <MenuItem v-slot="{ active }">
                                     <button
                                         @click="openDelete = true"
