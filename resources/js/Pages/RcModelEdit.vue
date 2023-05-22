@@ -14,14 +14,13 @@ import {
     TransitionRoot,
 } from '@headlessui/vue';
 import { useTextareaAutosize } from '@vueuse/core';
-import CrossIcon from '../Components/icons/CrossIcon.vue';
 import { ref } from 'vue';
 import {
     CheckIcon,
     ChevronDownIcon,
-    ExclamationTriangleIcon,
     PlusIcon,
     StarIcon,
+XCircleIcon,
 } from '@heroicons/vue/20/solid';
 import Button from '../Components/Button.vue';
 import {
@@ -52,7 +51,11 @@ const { preview, updatePreview } = useImagePreview(fileInput);
 
 const { textarea, input } = useTextareaAutosize({ watch: props.rcModel });
 
-const selectedTransmiter = ref(props.rcModel.transmitter_id ? props.transmitters.find((transmitter) => transmitter.id == props.rcModel.transmitter_id) : props.transmitters['0']);
+const selectedTransmiter = ref(
+    props.rcModel.transmitter_id
+        ? props.transmitters.find((transmitter) => transmitter.id == props.rcModel.transmitter_id)
+        : props.transmitters['0']
+);
 const selectedEngine = ref(props.engines['0']);
 const selectedPropeller = ref(props.propellers['0']);
 const selectedBattery = ref(props.batteries['0']);
@@ -170,7 +173,7 @@ function updateImage(id) {
     <Head :title="'Edition - ' + rcModel.name"></Head>
 
     <div
-        class="h-[16rem] rounded-b-[4rem] bg-gradient-to-br from-gradientfrom to-gradientto text-white text-2xl w-full">
+        class="h-60 md:h-[23rem] rounded-b-[4rem] bg-gradient-to-br from-gradientfrom to-gradientto text-white text-2xl w-full">
         <div>
             <div class="flex items-center justify-between px-8 pt-8">
                 <SideBarMenu />
@@ -276,7 +279,7 @@ function updateImage(id) {
                 </TransitionRoot>
             </div>
             <div>
-                <div class="flex flex-col items-center justify-center w-full -mt-6">
+                <div class="flex flex-col items-center justify-center w-full -mt-6 md:-mt-12">
                     <div
                         v-if="preview"
                         class="aspect-square w-40 rounded-[2rem] overflow-hidden bg-center bg-cover"
@@ -286,7 +289,7 @@ function updateImage(id) {
                         }" />
                     <img
                         v-else
-                        class="aspect-square w-40 rounded-[2rem] overflow-hidden object-cover"
+                        class="rounded-[2rem] object-cover align-middle max-w-full md:h-72 aspect-square md:aspect-auto h-40"
                         :src="`/image/rcModel/${rcModel.id}`"
                         :alt="rcModel.name"
                         @click="$refs.fileInput.click()" />
@@ -296,15 +299,15 @@ function updateImage(id) {
                         accept="image/*"
                         @change="updatePreview"
                         class="hidden" />
-                    <button @click="updateImage(rcModel.id)">Appliquer</button>
+                    <button @click="updateImage(rcModel.id)" class="md:text-4xl">Appliquer</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="mx-5 mt-3 [&>div>h1]:text-xl [&>div>h1]:text-app [&>div]:pt-4 pb-5 mb-5">
+    <div class="pb-5 mx-5 mt-3 mb-5">
         <form
             @submit.prevent="submit"
-            class="[&>div>h1]:text-xl [&>div>h1]:text-app [&>div>h1]:mt-5">
+            class="[&_h1]:text-xl [&_h1]:text-app [&_h1]:mt-5 [&_p]:md:text-2xl [&_h1]:md:text-4xl [&_input]:md:text-2xl">
             <div>
                 <h1>Titre</h1>
                 <input
@@ -328,52 +331,54 @@ function updateImage(id) {
                     v-model="rcModel.description"
                     placeholder="Description"
                     maxlength="250"
-                    class="w-full p-0 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
+                    class="w-full p-0 border-t-0 border-l-0 border-r-0 md:text-2xl border-b-app focus:ring-0" />
             </div>
             <div>
                 <h1>Caractéristiques</h1>
-                <div>
-                    <p>Envergure:</p>
-                    <div class="flex items-center w-full">
-                        <input
-                            type="number"
-                            v-model="rcModel.wingSpan"
-                            max="100000"
-                            class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
-                        <div class="absolute right-0 px-8 py-5">mm</div>
+                <div class="grid md:grid-cols-2 gap-5 my-3 [&>div>div>p]:py-2 [&>div>div>p]:border-b [&>div>div>p]:border-b-app">
+                    <div>
+                        <p>Envergure:</p>
+                        <div class="flex items-center w-full">
+                            <input
+                                type="number"
+                                v-model="rcModel.wingSpan"
+                                max="100000"
+                                class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
+                            <p>mm</p>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <p>Poids:</p>
-                    <div class="flex items-center w-full">
-                        <input
-                            type="number"
-                            v-model="rcModel.weight"
-                            max="1000000"
-                            class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
-                        <div class="absolute right-0 px-8 py-5">g</div>
+                    <div>
+                        <p>Poids:</p>
+                        <div class="flex items-center w-full">
+                            <input
+                                type="number"
+                                v-model="rcModel.weight"
+                                max="1000000"
+                                class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
+                            <p>g</p>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <p>Longueur:</p>
-                    <div class="flex items-center w-full">
-                        <input
-                            type="number"
-                            v-model="rcModel.length"
-                            max="100000"
-                            class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
-                        <div class="absolute right-0 px-8 py-5">mm</div>
+                    <div>
+                        <p>Longueur:</p>
+                        <div class="flex items-center w-full">
+                            <input
+                                type="number"
+                                v-model="rcModel.length"
+                                max="100000"
+                                class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
+                            <p>mm</p>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <p>Hauteur:</p>
-                    <div class="flex items-center w-full">
-                        <input
-                            type="number"
-                            v-model="rcModel.height"
-                            max="10000"
-                            class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
-                        <div class="absolute right-0 px-8 py-5">mm</div>
+                    <div>
+                        <p>Hauteur:</p>
+                        <div class="flex items-center w-full">
+                            <input
+                                type="number"
+                                v-model="rcModel.height"
+                                max="10000"
+                                class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
+                            <p>mm</p>
+                        </div>
                     </div>
                 </div>
                 <div>
@@ -385,15 +390,15 @@ function updateImage(id) {
                             class="flex items-center gap-1 px-2 py-1 rounded-full bg-app-secondary w-fit"
                             v-for="n in engine.pivot.quantity">
                             <p class="whitespace-nowrap">
-                                {{ engine.name + ' ' + (engine.power || "") }}
+                                {{ engine.name + ' ' + (engine.power || '') }}
                             </p>
-                            <CrossIcon @click="removeEngineFromRcModel(index)" />
+                            <XCircleIcon class="w-4 md:w-8" @click="removeEngineFromRcModel(index)" />
                         </div>
                     </div>
                     <div
                         class="flex items-center gap-1 px-2 py-1 rounded-full bg-app-secondary w-fit hover:cursor-pointer"
                         @click="openEngine = true">
-                        <PlusIcon class="w-4" />
+                        <PlusIcon class="w-4 md:w-8" />
                     </div>
                     <div>
                         <TransitionRoot as="template" :show="openEngine">
@@ -422,7 +427,7 @@ function updateImage(id) {
                                             leave-from="opacity-100 translate-y-0 scale-100"
                                             leave-to="opacity-0 translate-y-0 scale-95">
                                             <DialogPanel
-                                                class="relative w-full text-left transition-all transform bg-white shadow-xl xl:max-w-2xl">
+                                                class="relative w-full text-left transition-all transform bg-white shadow-xl md:max-w-2xl">
                                                 <div class="p-6 px-4 pt-5 pb-4 bg-white">
                                                     <div>
                                                         <div class="mt-0 text-center">
@@ -443,7 +448,8 @@ function updateImage(id) {
                                                                                 <span>{{
                                                                                     selectedEngine.name +
                                                                                     ' ' +
-                                                                                    (selectedEngine.power || "")
+                                                                                    (selectedEngine.power ||
+                                                                                        '')
                                                                                 }}</span>
                                                                             </span>
                                                                             <span
@@ -492,7 +498,8 @@ function updateImage(id) {
                                                                                                     class="w-4" />{{
                                                                                                     engine.name +
                                                                                                     ' ' +
-                                                                                                    (engine.power || "")
+                                                                                                    (engine.power ||
+                                                                                                        '')
                                                                                                 }}</span
                                                                                             >
                                                                                         </div>
@@ -559,13 +566,13 @@ function updateImage(id) {
                             <p class="whitespace-nowrap">
                                 {{ propeller.size + ' ' + propeller.type }}
                             </p>
-                            <CrossIcon @click="removePropellerFromRcModel(index)" />
+                            <XCircleIcon class="w-4 md:w-8" @click="removePropellerFromRcModel(index)" />
                         </div>
                     </div>
                     <div
                         class="flex items-center gap-1 px-2 py-1 rounded-full bg-app-secondary w-fit hover:cursor-pointer"
                         @click="openPropeller = true">
-                        <PlusIcon class="w-4" />
+                        <PlusIcon class="w-4 md:w-8" />
                     </div>
                     <div>
                         <TransitionRoot as="template" :show="openPropeller">
@@ -594,7 +601,7 @@ function updateImage(id) {
                                             leave-from="opacity-100 translate-y-0 scale-100"
                                             leave-to="opacity-0 translate-y-0 scale-95">
                                             <DialogPanel
-                                                class="relative w-full text-left transition-all transform bg-white shadow-xl">
+                                                class="relative w-full text-left transition-all transform bg-white shadow-xl md:max-w-2xl">
                                                 <div class="p-6 px-4 pt-5 pb-4 bg-white">
                                                     <div>
                                                         <div class="mt-0 text-center">
@@ -740,13 +747,13 @@ function updateImage(id) {
                                     battery.type
                                 }}
                             </p>
-                            <CrossIcon @click="removeBatteryFromRcModel(index)" />
+                            <XCircleIcon class="w-4 md:w-8" @click="removeBatteryFromRcModel(index)" />
                         </div>
                     </div>
                     <div
                         class="flex items-center gap-1 px-2 py-1 rounded-full bg-app-secondary w-fit hover:cursor-pointer"
                         @click="openBattery = true">
-                        <PlusIcon class="w-4" />
+                        <PlusIcon class="w-4 md:w-8" />
                     </div>
                     <div>
                         <TransitionRoot as="template" :show="openBattery">
@@ -775,7 +782,7 @@ function updateImage(id) {
                                             leave-from="opacity-100 translate-y-0 scale-100"
                                             leave-to="opacity-0 translate-y-0 scale-95">
                                             <DialogPanel
-                                                class="relative w-full text-left transition-all transform bg-white shadow-xl">
+                                                class="relative w-full text-left transition-all transform bg-white shadow-xl md:max-w-2xl">
                                                 <div class="p-6 px-4 pt-5 pb-4 bg-white">
                                                     <div>
                                                         <div class="mt-0 text-center">
@@ -915,99 +922,102 @@ function updateImage(id) {
             </div>
             <div>
                 <h1>Historique</h1>
-                <div>
-                    <p>Acquis le :</p>
-                    <input
-                        type="date"
-                        v-model="rcModel.acquired_on"
-                        class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
-                </div>
-                <div>
-                    <p>Fini le:</p>
-                    <input
-                        type="date"
-                        v-model="rcModel.finished_on"
-                        class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
-                </div>
-                <div>
-                    <p>Mis en service le:</p>
-                    <input
-                        type="date"
-                        v-model="rcModel.first_flown_on"
-                        class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
+                <div class="grid gap-5 my-3 md:grid-cols-2">
+                    <div>
+                        <p>Acquis le :</p>
+                        <input
+                            type="date"
+                            v-model="rcModel.acquired_on"
+                            class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
+                    </div>
+                    <div>
+                        <p>Fini le:</p>
+                        <input
+                            type="date"
+                            v-model="rcModel.finished_on"
+                            class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
+                    </div>
+                    <div>
+                        <p>Mis en service le:</p>
+                        <input
+                            type="date"
+                            v-model="rcModel.first_flown_on"
+                            class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
+                    </div>
                 </div>
             </div>
-
-            <Listbox as="div" v-model="selectedTransmiter">
-                <ListboxLabel as="h1">Radiocommande</ListboxLabel>
-                <div class="relative mt-2">
-                    <ListboxButton
-                        class="relative w-full rounded-md py-1.5 pl-3 pr-10 text-left text-gray-900 ring-1 ring-app">
-                        <span class="flex items-center">
-                            <span>{{
-                                selectedTransmiter.manufacturer + ' ' + selectedTransmiter.name
-                            }}</span>
-                        </span>
-                        <span
-                            class="absolute inset-y-0 right-0 flex items-center pr-2 ml-3 pointer-events-none">
-                            <ChevronDownIcon class="w-5 h-5 text-gray-400" aria-hidden="true" />
-                        </span>
-                    </ListboxButton>
-
-                    <transition
-                        leave-active-class="transition duration-100 ease-in"
-                        leave-from-class="opacity-100"
-                        leave-to-class="opacity-0">
-                        <ListboxOptions
-                            class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                            <ListboxOption
-                                v-for="transmitter in transmitters"
-                                :key="transmitter.id"
-                                :value="transmitter"
-                                v-slot="{ active, selected }">
-                                <li
-                                    :class="[
-                                        active ? 'bg-app text-white' : 'text-gray-900 bg-white',
-                                        'relative cursor-default select-none py-2 pl-3 pr-9',
-                                    ]">
-                                    <div class="flex items-center">
-                                        <span
-                                            :class="[
-                                                selected ? 'font-semibold' : 'font-normal',
-                                                'ml-3 block truncate',
-                                            ]"
-                                            >{{
-                                                transmitter.manufacturer + ' ' + transmitter.name
-                                            }}</span
-                                        >
-                                    </div>
-
-                                    <span
-                                        v-show="selected"
+            <div class="grid md:gap-5 md:grid-cols-2">
+                <Listbox as="div" v-model="selectedTransmiter">
+                    <ListboxLabel as="h1">Radiocommande</ListboxLabel>
+                    <div class="relative mt-2">
+                        <ListboxButton
+                            class="relative w-full rounded-md py-1.5 pl-3 pr-10 text-left md:text-2xl text-gray-900 ring-1 ring-app">
+                            <span class="flex items-center">
+                                <span>{{
+                                    selectedTransmiter.manufacturer + ' ' + selectedTransmiter.name
+                                }}</span>
+                            </span>
+                            <span
+                                class="absolute inset-y-0 right-0 flex items-center pr-2 ml-3 pointer-events-none">
+                                <ChevronDownIcon class="w-5 h-5 text-gray-400" aria-hidden="true" />
+                            </span>
+                        </ListboxButton>
+    
+                        <transition
+                            leave-active-class="transition duration-100 ease-in"
+                            leave-from-class="opacity-100"
+                            leave-to-class="opacity-0">
+                            <ListboxOptions
+                                class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                <ListboxOption
+                                    v-for="transmitter in transmitters"
+                                    :key="transmitter.id"
+                                    :value="transmitter"
+                                    v-slot="{ active, selected }">
+                                    <li
                                         :class="[
-                                            active ? 'text-white' : 'text-app',
-                                            'absolute inset-y-0 right-0 flex items-center pr-4',
+                                            active ? 'bg-app text-white' : 'text-gray-900 bg-white',
+                                            'relative cursor-default select-none py-2 pl-3 pr-9 md:text-2xl',
                                         ]">
-                                        <CheckIcon class="w-5 h-5" aria-hidden="true" />
-                                    </span>
-                                </li>
-                            </ListboxOption>
-                        </ListboxOptions>
-                    </transition>
+                                        <div class="flex items-center">
+                                            <span
+                                                :class="[
+                                                    selected ? 'font-semibold' : 'font-normal',
+                                                    'ml-3 block truncate',
+                                                ]"
+                                                >{{
+                                                    transmitter.manufacturer + ' ' + transmitter.name
+                                                }}</span
+                                            >
+                                        </div>
+    
+                                        <span
+                                            v-show="selected"
+                                            :class="[
+                                                active ? 'text-white' : 'text-app',
+                                                'absolute inset-y-0 right-0 flex items-center pr-4',
+                                            ]">
+                                            <CheckIcon class="w-5 h-5" aria-hidden="true" />
+                                        </span>
+                                    </li>
+                                </ListboxOption>
+                            </ListboxOptions>
+                        </transition>
+                    </div>
+                </Listbox>
+    
+                <div>
+                    <h1>Vols</h1>
+                    <input
+                        type="number"
+                        v-model="rcModel.flights_offset"
+                        max="1000000000"
+                        class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
                 </div>
-            </Listbox>
-
-            <div>
-                <h1>Vols</h1>
-                <input
-                    type="number"
-                    v-model="rcModel.flights_offset"
-                    max="1000000000"
-                    class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
             </div>
 
             <div>
-                <Button class="mt-5">
+                <Button class="mt-5 md:mt-8">
                     <div class="flex items-center justify-between gap-2">
                         <p>Sauver</p>
                         <CheckIcon class="h-5" />
