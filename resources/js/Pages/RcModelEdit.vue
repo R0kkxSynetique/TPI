@@ -282,7 +282,7 @@ function updateImage(id) {
                 <div class="flex flex-col items-center justify-center w-full -mt-6 md:-mt-12">
                     <div
                         v-if="preview"
-                        class="aspect-square w-40 rounded-[2rem] overflow-hidden bg-center bg-cover"
+                        class="aspect-square h-40 md:h-72 max-w-full rounded-[2rem] overflow-hidden bg-center bg-cover"
                         @click="$refs.fileInput.click()"
                         :style="{
                             backgroundImage: `url('${preview}')`,
