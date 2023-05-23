@@ -19,7 +19,6 @@ const submit = () => {
     })).post('/login', {
         onFinish: () => form.reset('password'),
         onError: (e) => {
-            console.log(e);
             if (e.email) {
                 toast.error(e.email, {
                     timeout: 10000,
