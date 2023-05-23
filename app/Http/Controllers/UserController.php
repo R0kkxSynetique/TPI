@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
 
 class UserController extends Controller
@@ -60,6 +62,15 @@ class UserController extends Controller
      */
     public function update(User $user)
     {
+        Validator::make(request()->get('user'), [
+            'username' => ['required', 'string', Rule::unique('users')->ignore($user)],
+            'lastname' => ['required', 'string'],
+            'firstname' => ['required', 'string'],
+            'birthdate' => ['required', 'date'],
+        ], [
+            'username' => __('validation.unique'),
+        ])->validateWithBag('updateUser');
+
         // * Get the user from the request
         $input = collect(request()->input('user'));
 

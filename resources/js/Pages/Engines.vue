@@ -94,6 +94,7 @@ if (message) {
                             <ArrowPathIcon class="w-5 fill-app md:w-10" />
                             <p class="flex-1 truncate">
                                 {{ engine.frequency }}
+                                {{ engine.type=="électrique" ? " kV" : "" }}
                             </p>
                         </div>
                     </div>

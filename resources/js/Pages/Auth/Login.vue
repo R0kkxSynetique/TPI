@@ -2,20 +2,29 @@
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthBackground from '@/Components/BackGrounds/AuthBackground.vue';
 import Button from '@/Components/Button.vue';
-import ButtonRightArrowIcon from '@/Components/icons/ButtonRightArrowIcon.vue';
 import { ref } from 'vue';
 import { ArrowRightIcon, EyeIcon, EyeSlashIcon } from '@heroicons/vue/20/solid';
+import { useToast } from 'vue-toastification';
 
 const form = useForm({
     email: '',
     password: '',
 });
 
+const toast = useToast();
+
 const submit = () => {
     form.transform((data) => ({
         ...data,
     })).post('/login', {
         onFinish: () => form.reset('password'),
+        onError: (e) => {
+            if (e.email) {
+                toast.error(e.email, {
+                    timeout: 10000,
+                });
+            }
+        },
     });
 };
 
@@ -29,7 +38,7 @@ function toggleShow() {
 <template>
     <Head title="Connexion" />
     <form class="w-full [&_input]:md:text-2xl" @submit.prevent="submit">
-        <AuthBackground >
+        <AuthBackground>
             <template v-slot:logo>
                 <img
                     src="../../../../storage/app/public/img/Logo.png"
@@ -37,7 +46,9 @@ function toggleShow() {
                     class="absolute w-20 top-2 left-8 md:w-40 md:left-10" />
             </template>
             <template v-slot:header>
-                <p class="absolute text-3xl text-white top-28 md:top-52 md:text-6xl left-8">Bienvenue</p>
+                <p class="absolute text-3xl text-white top-28 md:top-52 md:text-6xl left-8">
+                    Bienvenue
+                </p>
             </template>
         </AuthBackground>
         <div class="w-full mx-auto mt-6 md:-mt-24 md:w-1/2">

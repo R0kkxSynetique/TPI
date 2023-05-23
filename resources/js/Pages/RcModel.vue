@@ -241,22 +241,48 @@ function printQr() {
             <div class="grid grid-cols-2 md:grid-cols-4">
                 <p>Envergure:</p>
                 <p>
-                    {{ rcModel.wingSpan ? rcModel.wingSpan / 1000 > 1 ? rcModel.wingSpan / 1000 + ' m' : rcModel.wingSpan + ' mm' : '-' }}
+                    {{
+                        rcModel.wingSpan
+                            ? rcModel.wingSpan / 1000 > 1
+                                ? rcModel.wingSpan / 1000 + ' m'
+                                : rcModel.wingSpan + ' mm'
+                            : '-'
+                    }}
                 </p>
                 <p>Poids:</p>
                 <p>
-                    {{ rcModel.weight ? rcModel.weight / 1000 > 1 ? rcModel.weight / 1000 + ' Kg' : rcModel.weight + ' g' : '-' }}
+                    {{
+                        rcModel.weight
+                            ? rcModel.weight / 1000 > 1
+                                ? rcModel.weight / 1000 + ' Kg'
+                                : rcModel.weight + ' g'
+                            : '-'
+                    }}
                 </p>
                 <p>Longueur:</p>
                 <p>
-                    {{ rcModel.length ? rcModel.length / 1000 > 1 ? rcModel.length / 1000 + ' m' : rcModel.length + ' mm' : '-' }}
+                    {{
+                        rcModel.length
+                            ? rcModel.length / 1000 > 1
+                                ? rcModel.length / 1000 + ' m'
+                                : rcModel.length + ' mm'
+                            : '-'
+                    }}
                 </p>
                 <p>Hauteur:</p>
                 <p>
-                    {{ rcModel.height ? rcModel.height /1000 > 1 ? rcModel.height /1000 + ' m' : rcModel.height + ' mm' : '-' }}
+                    {{
+                        rcModel.height
+                            ? rcModel.height / 1000 > 1
+                                ? rcModel.height / 1000 + ' m'
+                                : rcModel.height + ' mm'
+                            : '-'
+                    }}
                 </p>
 
-                <p v-if="rcModel.engines.length > 1 || rcModel.engines[0].pivot.quantity > 1">Moteurs:</p>
+                <p v-if="rcModel.engines?.length > 1 || rcModel.engines[0]?.pivot.quantity > 1">
+                    Moteurs:
+                </p>
                 <p v-else>Moteur:</p>
                 <div v-if="rcModel.engines.length > 0">
                     <div v-if="rcModel.engines.length > 1">
@@ -288,14 +314,16 @@ function printQr() {
                         </p>
                     </div>
                 </div>
-                <p v-if="rcModel.engines[0].type">Type:</p>
-                <div v-if="rcModel.engines[0].type" class="md:!py-0">
+                <p v-if="rcModel.engines[0]?.type">Type:</p>
+                <div v-if="rcModel.engines[0]?.type" class="md:!py-0">
                     <p>
                         {{ rcModel.engines[0].type }}
                     </p>
                     <!-- //todo: select the type based on all the engines -->
                 </div>
-                <p v-if="rcModel.propellers.length > 1 || rcModel.propellers[0].pivot.quantity > 1">Hélices:</p>
+                <p v-if="rcModel.propellers?.length > 1 || rcModel.propellers[0]?.pivot.quantity > 1">
+                    Hélices:
+                </p>
                 <p v-else>Hélice:</p>
                 <div v-if="rcModel.propellers.length > 0">
                     <div v-if="rcModel.propellers.length > 1">
@@ -326,7 +354,9 @@ function printQr() {
                         </p>
                     </div>
                 </div>
-                <p v-if="rcModel.batteries.length > 1 || rcModel.batteries[0].pivot.quantity > 1">Batteries:</p>
+                <p v-if="rcModel.batteries?.length > 1 || rcModel.batteries[0]?.pivot.quantity > 1">
+                    Batteries:
+                </p>
                 <p v-else>Batterie:</p>
                 <div v-if="rcModel.batteries.length > 0">
                     <div v-if="rcModel.batteries.length > 1">

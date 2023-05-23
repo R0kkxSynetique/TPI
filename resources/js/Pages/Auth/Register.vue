@@ -3,6 +3,9 @@ import { Head, useForm, Link } from '@inertiajs/vue3';
 import AuthBackground from '@/Components/BackGrounds/AuthBackground.vue';
 import Button from '@/Components/Button.vue';
 import { ArrowRightIcon, EyeIcon, EyeSlashIcon } from '@heroicons/vue/20/solid';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 const form = useForm({
     lastname: '',
@@ -14,8 +17,22 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post('/register');
+    form.post('/register', {
+        onError: (e) => {
+            console.log(e);
+            if (e.createUser) {
+                for (const [key, value] of Object.entries(e.createUser)) {
+                    toast.error(value, {
+                        timeout: 10000,
+                    });
+                }
+            }
+        },
+    });
 };
+
+
+
 </script>
 
 <template>
@@ -40,7 +57,7 @@ const submit = () => {
             </p>
             <div class="grid md:grid-cols-2">
                 <div class="flex flex-col items-start mx-5">
-                    <label for="username-input" class="text-gray-400">Nom d'utilisateur</label>
+                    <label for="username-input" class="text-gray-400">Pseudo</label>
                     <input
                         id="username"
                         v-model="form.username"

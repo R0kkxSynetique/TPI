@@ -39,7 +39,18 @@ function destroy(id) {
 }
 
 const submit = () => {
-    form.put(`/user/${user.id}`);
+    form.put(`/user/${user.id}`, {
+        onSuccess: () => {
+          toast.success("Votre profil a bien été mis à jour.")
+        },
+        onError: (e) => {
+            if (e.updateUser) {
+                toast.error(e.updateUser.username, {
+                    timeout: 10000,
+                });
+            }
+        },
+    });
 };
 </script>
 <template>
@@ -123,17 +134,14 @@ const submit = () => {
                     class="grid items-center justify-center grid-cols-1 gap-3 md:grid-cols-2 place-items-center">
                     <button
                         id="saveButton"
-                        class="flex items-center justify-center transition-all rounded-full shadow-lg drop-shadow text-app disabled:bg-slate-200 disabled:text-gray-500 disabled:cursor-not-allowed disabled:opacity-60"
-                        :class="[saved ? 'bg-Valid w-5 p-8 hover:cursor-default' : 'w-full py-5']"
+                        class="flex items-center justify-center w-full py-5 transition-all rounded-full shadow-lg drop-shadow text-app disabled:bg-slate-200 disabled:text-gray-500 disabled:cursor-not-allowed disabled:opacity-60"
                         :disabled="
                             !form.user.username ||
                             !form.user.firstname ||
                             !form.user.lastname ||
                             !form.user.birthdate
-                        "
-                        @click="saved = !saved">
-                        <p v-if="!saved">Sauvegarder</p>
-                        <CheckIcon v-else class="absolute z-10 text-white w-7" />
+                        ">
+                        <p>Sauvegarder</p>
                     </button>
                     <Link
                         :href="'/user/' + user.id + '/change-password'"

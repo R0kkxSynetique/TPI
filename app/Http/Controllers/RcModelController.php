@@ -172,6 +172,10 @@ class RcModelController extends Controller
     {
         // * Getting the rc model data from the request
         $input = collect(request()->get('rcModel'));
+        
+        if ($input->get('flights_offset') == null){
+            $input->put('flights_offset', 0);
+        }
 
         // * Updating the rc model in the database
         DB::transaction(function () use ($input, $rcModel) {

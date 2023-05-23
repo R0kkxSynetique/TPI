@@ -14,6 +14,7 @@ import {
 } from '@headlessui/vue';
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
 import { useImagePreview } from '../lib/image';
+import { useToast } from 'vue-toastification';
 
 const props = defineProps({
     engines: Object,
@@ -46,6 +47,8 @@ const form = useForm({
     rcModel: rcModel,
     image: null,
 });
+
+const toast = useToast();
 
 const fileInput = ref();
 const openEngine = ref(false);
@@ -142,7 +145,11 @@ const submit = () => {
     if (fileInput.value) {
         form.image = fileInput.value.files ? fileInput.value.files[0] : null;
     }
-    form.post(`/rc-models`);
+    form.post(`/rc-models`, {
+        onError: (e) => {
+            toast.error(e.image);
+        },
+    });
 };
 </script>
 <template>
