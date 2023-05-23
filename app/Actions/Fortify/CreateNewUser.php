@@ -19,6 +19,18 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
+        Validator::make($input, [
+            'email' => ['string', 'unique:users,email'],
+            'username' => ['string', 'unique:users,username'],
+            'lastname' => ['required', 'string'],
+            'firstname' => ['required', 'string'],
+            'birthdate' => ['required', 'date'],
+            'password' => ['required', 'string'],
+        ], [
+            'email' => __('validation.unique'),
+            'username' => __('validation.unique'),
+        ])->validateWithBag('createUser');
+
         return User::create([
             'lastname' => $input['lastname'],
             'firstname' => $input['firstname'],
