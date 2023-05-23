@@ -68,147 +68,144 @@ const submit = () => {
         </div>
     </div>
 
-    <div
+    <form
+        @submit.prevent="submit"
         class="mx-5 mt-3 [&_h1]:text-xl [&_h1]:text-app [&_h1]:mt-5 [&_h1]:md:text-4xl [&>div]:pt-4 pb-5 mb-5 [&_p]:md:text-2xl [&_input]:md:text-2xl">
-        <form @submit.prevent="submit">
+        <div>
+            <h1>Nom</h1>
+            <input
+                type="text"
+                v-model="form.engine.name"
+                placeholder="Fiala b2"
+                required
+                maxlength="50"
+                class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
+        </div>
+        <div>
+            <h1>Caractéristiques</h1>
             <div>
-                <h1>Nom</h1>
-                <input
-                    type="text"
-                    v-model="form.engine.name"
-                    placeholder="Fiala b2"
-                    required
-                    maxlength="50"
-                    class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
-            </div>
-            <div>
-                <h1>Caractéristiques</h1>
+                <p>Type:</p>
                 <div>
-                    <p>Type:</p>
-                    <div>
-                        <Listbox as="div" v-model="form.engine.type">
-                            <div class="relative z-0 mt-2">
-                                <ListboxButton
-                                    class="relative w-full rounded-md py-1.5 pl-3 pr-10 text-left text-gray-900 ring-1 ring-app">
-                                    <span class="flex items-center md:text-2xl"
-                                        >{{ form.engine.type }}
-                                    </span>
-                                    <span
-                                        class="absolute inset-y-0 right-0 flex items-center pr-2 ml-3 pointer-events-none">
-                                        <ChevronDownIcon
-                                            class="w-5 h-5 text-gray-400"
-                                            aria-hidden="true" />
-                                    </span>
-                                </ListboxButton>
+                    <Listbox as="div" v-model="form.engine.type">
+                        <div class="relative z-0 mt-2">
+                            <ListboxButton
+                                class="relative w-full rounded-md py-1.5 pl-3 pr-10 text-left text-gray-900 ring-1 ring-app">
+                                <span class="flex items-center md:text-2xl"
+                                    >{{ form.engine.type }}
+                                </span>
+                                <span
+                                    class="absolute inset-y-0 right-0 flex items-center pr-2 ml-3 pointer-events-none">
+                                    <ChevronDownIcon
+                                        class="w-5 h-5 text-gray-400"
+                                        aria-hidden="true" />
+                                </span>
+                            </ListboxButton>
 
-                                <transition
-                                    leave-active-class="transition duration-100 ease-in"
-                                    leave-from-class="opacity-100"
-                                    leave-to-class="opacity-0">
-                                    <ListboxOptions
-                                        class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                        <ListboxOption
-                                            v-for="engineType in engineTypes"
-                                            :key="engineType"
-                                            :value="engineType"
-                                            v-slot="{ active, selected }">
-                                            <li
-                                                :class="[
-                                                    active ? 'bg-app text-white' : 'text-gray-900',
-                                                    'relative cursor-default select-none py-2 pl-3 pr-9 md:text-2xl',
-                                                ]">
-                                                <div class="flex items-center">
-                                                    <span
-                                                        :class="[
-                                                            selected
-                                                                ? 'font-semibold'
-                                                                : 'font-normal',
-                                                            'ml-3 block truncate',
-                                                        ]"
-                                                        >{{ engineType }}</span
-                                                    >
-                                                </div>
-
+                            <transition
+                                leave-active-class="transition duration-100 ease-in"
+                                leave-from-class="opacity-100"
+                                leave-to-class="opacity-0">
+                                <ListboxOptions
+                                    class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    <ListboxOption
+                                        v-for="engineType in engineTypes"
+                                        :key="engineType"
+                                        :value="engineType"
+                                        v-slot="{ active, selected }">
+                                        <li
+                                            :class="[
+                                                active ? 'bg-app text-white' : 'text-gray-900',
+                                                'relative cursor-default select-none py-2 pl-3 pr-9 md:text-2xl',
+                                            ]">
+                                            <div class="flex items-center">
                                                 <span
-                                                    v-if="selected"
                                                     :class="[
-                                                        active ? 'text-white' : 'text-app',
-                                                        'absolute inset-y-0 right-0 flex items-center pr-4',
-                                                    ]">
-                                                    <CheckIcon class="w-5 h-5" aria-hidden="true" />
-                                                </span>
-                                            </li>
-                                        </ListboxOption>
-                                    </ListboxOptions>
-                                </transition>
-                            </div>
-                        </Listbox>
-                    </div>
+                                                        selected ? 'font-semibold' : 'font-normal',
+                                                        'ml-3 block truncate',
+                                                    ]"
+                                                    >{{ engineType }}</span
+                                                >
+                                            </div>
+
+                                            <span
+                                                v-if="selected"
+                                                :class="[
+                                                    active ? 'text-white' : 'text-app',
+                                                    'absolute inset-y-0 right-0 flex items-center pr-4',
+                                                ]">
+                                                <CheckIcon class="w-5 h-5" aria-hidden="true" />
+                                            </span>
+                                        </li>
+                                    </ListboxOption>
+                                </ListboxOptions>
+                            </transition>
+                        </div>
+                    </Listbox>
                 </div>
-                <div
-                    class="grid gap-3 md:gap-5 md:grid-cols-2 [&>div>div>p]:py-2 [&>div>div>p]:border-b [&>div>div>p]:border-b-app [&>div>p]:md:mt-4">
-                    <div v-if="form.engine.type == 'thermique'">
-                        <p>Puissance:</p>
-                        <div class="flex items-center w-full">
-                            <input
-                                type="number"
-                                v-model="form.engine.power"
-                                placeholder="120"
-                                max="10000"
-                                class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
-                            <p>cc</p>
-                        </div>
-                    </div>
-                    <div>
-                        <p>Fréquence:</p>
-                        <div class="flex items-center w-full">
-                            <input
-                                :type="form.engine.type == 'thermique' ? 'text' : 'number'"
-                                v-model="form.engine.frequency"
-                                maxlength="25"
-                                max="50000"
-                                :placeholder="
-                                    form.engine.type == 'thermique' ? '4 temps ou 4t' : '1140'
-                                "
-                                class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
-                            <p v-if="form.engine.type == 'électrique'">kV</p>
-                        </div>
-                    </div>
-                    <div>
-                        <p>{{ form.engine.type == 'thermique' ? 'Carburant' : 'Alimentation' }}</p>
-                        <div class="flex items-center w-full">
-                            <input
-                                type="text"
-                                v-model="form.engine.fuel"
-                                maxlength="50"
-                                :placeholder="
-                                    form.engine.type == 'thermique' ? '95 SP 3.3%' : 'Lipo 4S'
-                                "
-                                class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
-                        </div>
-                    </div>
-                    <div>
-                        <p>Poids:</p>
-                        <div class="flex items-center w-full">
-                            <input
-                                type="number"
-                                v-model="form.engine.weight"
-                                placeholder="3450"
-                                max="50000"
-                                class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
-                            <p>g</p>
-                        </div>
+            </div>
+            <div
+                class="grid gap-3 md:gap-5 md:grid-cols-2 [&>div>div>p]:py-2 [&>div>div>p]:border-b [&>div>div>p]:border-b-app [&>div>p]:md:mt-4">
+                <div v-if="form.engine.type == 'thermique'">
+                    <p>Puissance:</p>
+                    <div class="flex items-center w-full">
+                        <input
+                            type="number"
+                            v-model="form.engine.power"
+                            placeholder="120"
+                            max="10000"
+                            class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
+                        <p>cc</p>
                     </div>
                 </div>
                 <div>
-                    <Button class="z-0 mt-5">
-                        <div class="flex items-center justify-between gap-2">
-                            <p>Créer</p>
-                            <CheckIcon class="h-5" />
-                        </div>
-                    </Button>
+                    <p>Fréquence:</p>
+                    <div class="flex items-center w-full">
+                        <input
+                            :type="form.engine.type == 'thermique' ? 'text' : 'number'"
+                            v-model="form.engine.frequency"
+                            maxlength="25"
+                            max="50000"
+                            :placeholder="
+                                form.engine.type == 'thermique' ? '4 temps ou 4t' : '1140'
+                            "
+                            class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
+                        <p v-if="form.engine.type == 'électrique'">kV</p>
+                    </div>
+                </div>
+                <div>
+                    <p>{{ form.engine.type == 'thermique' ? 'Carburant' : 'Alimentation' }}</p>
+                    <div class="flex items-center w-full">
+                        <input
+                            type="text"
+                            v-model="form.engine.fuel"
+                            maxlength="50"
+                            :placeholder="
+                                form.engine.type == 'thermique' ? '95 SP 3.3%' : 'Lipo 4S'
+                            "
+                            class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
+                    </div>
+                </div>
+                <div>
+                    <p>Poids:</p>
+                    <div class="flex items-center w-full">
+                        <input
+                            type="number"
+                            v-model="form.engine.weight"
+                            placeholder="3450"
+                            max="50000"
+                            class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
+                        <p>g</p>
+                    </div>
                 </div>
             </div>
-        </form>
-    </div>
+            <div>
+                <Button class="z-0 mt-5">
+                    <div class="flex items-center justify-between gap-2">
+                        <p>Créer</p>
+                        <CheckIcon class="h-5" />
+                    </div>
+                </Button>
+            </div>
+        </div>
+    </form>
 </template>
