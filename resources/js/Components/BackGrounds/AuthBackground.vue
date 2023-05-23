@@ -1,8 +1,11 @@
 <template>
+    <slot name="logo"></slot>
+    <slot name="header"></slot>
     <svg
+        class="w-72 md:w-[32rem]"
         width="100%"
         height="100%"
-        viewBox="0 0 500 500"
+        viewBox="0 0 350 300"
         fill="none"
         xmlns="http://www.w3.org/2000/svg">
         <circle cx="164" cy="70" r="176" fill="url(#paint0_linear_9_322)" />
