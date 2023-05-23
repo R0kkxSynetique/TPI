@@ -72,7 +72,10 @@ class RcModelController extends Controller
 
         // * Getting the rc model data from the request
         $input = collect(request()->get('rcModel'));
-
+        
+        if ($input->get('flights_offset') == null) {
+            $input->put('flights_offset', 0);
+        }
         // * Replacing the user id placeholder in the rc model
         $input->put('user_id', Auth::user()->id);
 
