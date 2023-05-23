@@ -18,6 +18,7 @@ import { ref, computed, onMounted } from 'vue';
 import { useToast } from 'vue-toastification';
 import print from 'print-js';
 import JoinAM from '@/Components/JoinAM.vue';
+import { EllipsisHorizontalIcon } from '@heroicons/vue/20/solid';
 
 const message = computed(() => usePage().props.flash.message).value;
 const type = computed(() => usePage().props.flash.type).value;
@@ -46,7 +47,7 @@ if (message) {
 }
 
 function joinAmToast() {
-    if (props.guest){
+    if (props.guest) {
         toast.info(JoinAM, {
             position: 'top-right',
             timeout: false,
@@ -67,7 +68,7 @@ function joinAmToast() {
 
 onMounted(() => {
     requestAnimationFrame(() => {
-        joinAmToast()
+        joinAmToast();
     });
 });
 
@@ -87,14 +88,14 @@ function printQr() {
     <Head :title="rcModel.name ? rcModel.name : 'Modèle réduit'"></Head>
 
     <div
-        class="h-[14rem] rounded-b-[4rem] bg-gradient-to-br from-gradientfrom to-gradientto text-white text-2xl w-full">
+        class="h-56 md:h-[22rem] rounded-b-[4rem] bg-gradient-to-br from-gradientfrom to-gradientto text-white text-2xl w-full">
         <div>
             <div class="flex items-center justify-between px-8 pt-8">
                 <SideBarMenu v-if="!props.guest" />
                 <Menu as="div" class="relative inline-block text-left" v-if="!props.guest">
                     <div>
-                        <MenuButton class="p-3">
-                            <MoreIcon />
+                        <MenuButton>
+                            <EllipsisHorizontalIcon class="w-8 md:w-12" />
                         </MenuButton>
                     </div>
 
@@ -107,13 +108,13 @@ function printQr() {
                         leave-to-class="transform scale-95 opacity-0">
                         <MenuItems
                             class="absolute right-0 z-10 mt-2 origin-top-right bg-white rounded-md shadow-lg w-fit">
-                            <div class="py-1 [&>*]:text-center">
+                            <div class="py-1 [&>*]:text-center [&_button]:md:text-2xl">
                                 <MenuItem v-slot="{ active }">
                                     <Link
                                         :href="'/rc-models/' + rcModel.id + '/edit'"
                                         :class="[
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm',
+                                            'block px-4 py-2 text-sm md:text-2xl',
                                         ]"
                                         >Modifier</Link
                                     >
@@ -143,9 +144,9 @@ function printQr() {
                     </transition>
                 </Menu>
             </div>
-            <div class="flex items-center justify-center w-full -mt-6">
+            <div class="flex items-center justify-center w-full -mt-6 md:-mt-12">
                 <img
-                    class="aspect-square w-40 rounded-[2rem] overflow-hidden object-cover"
+                    class="rounded-[2rem] object-cover align-middle max-w-full md:h-72 aspect-square md:aspect-auto h-40"
                     :src="`/image/rcModel/${rcModel.id}`"
                     :alt="rcModel.name" />
             </div>
@@ -217,7 +218,8 @@ function printQr() {
             </Dialog>
         </TransitionRoot>
     </div>
-    <div class="mx-5 mt-3 [&>div>h1]:text-xl [&>div>h1]:text-app [&>div]:pt-4 pb-5">
+    <div
+        class="mx-5 mt-3 [&>div>h1]:text-xl [&_p]:md:text-2xl [&>div>div_p]:md:py-3 [&>div_h1]:md:text-4xl [&>div_h1]:text-app [&>div]:pt-4 pb-5">
         <div>
             <h1 class="max-w-full break-words">
                 {{ rcModel.name }}
@@ -234,97 +236,101 @@ function printQr() {
                 {{ rcModel.description }}
             </p>
         </div>
-        <div>
+        <div class="[&>div>div>div>p]:md:!py-0 [&>div>div]:md:py-3">
             <h1>Caractéristiques</h1>
-            <p>
-                Envergure:
-                {{ rcModel.wingSpan ? rcModel.wingSpan + ' mm' : '-' }}
-            </p>
-            <p>
-                Poids:
-                {{ rcModel.weight ? rcModel.weight / 1000 + ' Kg' : '-' }}
-            </p>
-            <p>
-                Longueur:
-                {{ rcModel.length ? rcModel.length + ' mm' : '-' }}
-            </p>
-            <p>
-                Hauteur:
-                {{ rcModel.height ? rcModel.height + ' mm' : '-' }}
-            </p>
-            <div v-if="rcModel.engines.length > 0">
-                <div v-if="rcModel.engines.length > 1">
-                    <p>Moteurs:</p>
-                    <!-- //todo: Do it as one line with a coma to separate the engines -->
-                    <p v-for="engine in rcModel.engines">
-                        {{
-                            engine.pivot.quantity + 'x ' + engine.name + ' ' + (engine.power || '')
-                        }}
-                    </p>
+            <div class="grid grid-cols-2 md:grid-cols-4">
+                <p>Envergure:</p>
+                <p>
+                    {{ rcModel.wingSpan ? rcModel.wingSpan / 1000 > 1 ? rcModel.wingSpan / 1000 + ' m' : rcModel.wingSpan + ' mm' : '-' }}
+                </p>
+                <p>Poids:</p>
+                <p>
+                    {{ rcModel.weight ? rcModel.weight / 1000 > 1 ? rcModel.weight / 1000 + ' Kg' : rcModel.weight + ' g' : '-' }}
+                </p>
+                <p>Longueur:</p>
+                <p>
+                    {{ rcModel.length ? rcModel.length / 1000 > 1 ? rcModel.length / 1000 + ' m' : rcModel.length + ' mm' : '-' }}
+                </p>
+                <p>Hauteur:</p>
+                <p>
+                    {{ rcModel.height ? rcModel.height /1000 > 1 ? rcModel.height /1000 + ' m' : rcModel.height + ' mm' : '-' }}
+                </p>
+
+                <p v-if="rcModel.engines.length > 1 || rcModel.engines[0].pivot.quantity > 1">Moteurs:</p>
+                <p v-else>Moteur:</p>
+                <div v-if="rcModel.engines.length > 0">
+                    <div v-if="rcModel.engines.length > 1">
+                        <!-- //todo: Do it as one line with a coma to separate the engines -->
+                        <p v-for="engine in rcModel.engines">
+                            {{
+                                engine.pivot.quantity +
+                                'x ' +
+                                engine.name +
+                                ' ' +
+                                (engine.power || '')
+                            }}
+                        </p>
+                    </div>
+                    <div v-else-if="rcModel.engines[0].pivot.quantity > 1">
+                        <p>
+                            {{
+                                rcModel.engines[0].pivot.quantity +
+                                'x ' +
+                                rcModel.engines[0].name +
+                                ' ' +
+                                (rcModel.engines[0].power || '')
+                            }}
+                        </p>
+                    </div>
+                    <div v-else>
+                        <p>
+                            {{ rcModel.engines[0].name + ' ' + (rcModel.engines[0].power || '') }}
+                        </p>
+                    </div>
                 </div>
-                <div v-else-if="rcModel.engines[0].pivot.quantity > 1">
+                <p v-if="rcModel.engines[0].type">Type:</p>
+                <div v-if="rcModel.engines[0].type" class="md:!py-0">
                     <p>
-                        Moteurs:
-                        {{
-                            rcModel.engines[0].pivot.quantity +
-                            'x ' +
-                            rcModel.engines[0].name +
-                            ' ' +
-                            (rcModel.engines[0].power || '')
-                        }}
-                    </p>
-                </div>
-                <div v-else>
-                    <p>
-                        Moteur:
-                        {{ rcModel.engines[0].name + ' ' + (rcModel.engines[0].power || '') }}
-                    </p>
-                </div>
-                <div v-if="rcModel.engines[0].type">
-                    <p>
-                        Type:
                         {{ rcModel.engines[0].type }}
                     </p>
                     <!-- //todo: select the type based on all the engines -->
                 </div>
-            </div>
-            <div v-if="rcModel.propellers.length > 0">
-                <div v-if="rcModel.propellers.length > 1">
-                    <p>Helices:</p>
-                    <p v-for="propeller in rcModel.propellers">
-                        {{
-                            propeller.pivot.quantity +
-                            'x "' +
-                            propeller.size +
-                            '" ' +
-                            propeller.type
-                        }}
-                    </p>
-                </div>
-                <div v-else-if="rcModel.propellers[0].pivot.quantity > 1">
-                    <p>
-                        Hélices:
-                        {{
-                            rcModel.propellers[0].pivot.quantity +
-                            'x "' +
-                            rcModel.propellers[0].size +
-                            '" ' +
-                            rcModel.propellers[0].type
-                        }}
-                    </p>
-                </div>
-                <div v-else>
-                    <p>
-                        Hélice:
-                        {{ rcModel.propellers[0].size + ' ' + rcModel.propellers[0].type }}
-                    </p>
-                </div>
-            </div>
-            <div v-if="rcModel.batteries.length > 0">
-                <div v-if="rcModel.batteries.length > 1">
-                    <p>Batteries:</p>
-                    <div v-for="battery in rcModel.batteries">
+                <p v-if="rcModel.propellers.length > 1 || rcModel.propellers[0].pivot.quantity > 1">Hélices:</p>
+                <p v-else>Hélice:</p>
+                <div v-if="rcModel.propellers.length > 0">
+                    <div v-if="rcModel.propellers.length > 1">
+                        <p v-for="propeller in rcModel.propellers">
+                            {{
+                                propeller.pivot.quantity +
+                                'x "' +
+                                propeller.size +
+                                '" ' +
+                                propeller.type
+                            }}
+                        </p>
+                    </div>
+                    <div v-else-if="rcModel.propellers[0].pivot.quantity > 1">
                         <p>
+                            {{
+                                rcModel.propellers[0].pivot.quantity +
+                                'x "' +
+                                rcModel.propellers[0].size +
+                                '" ' +
+                                rcModel.propellers[0].type
+                            }}
+                        </p>
+                    </div>
+                    <div v-else>
+                        <p>
+                            {{ rcModel.propellers[0].size + ' ' + rcModel.propellers[0].type }}
+                        </p>
+                    </div>
+                </div>
+                <p v-if="rcModel.batteries.length > 1 || rcModel.batteries[0].pivot.quantity > 1">Batteries:</p>
+                <p v-else>Batterie:</p>
+                <div v-if="rcModel.batteries.length > 0">
+                    <div v-if="rcModel.batteries.length > 1">
+                        <p v-for="battery in rcModel.batteries">
                             {{
                                 battery.pivot.quantity +
                                 'x ' +
@@ -334,54 +340,54 @@ function printQr() {
                             }}
                         </p>
                     </div>
-                </div>
-                <div v-else-if="rcModel.batteries[0].pivot.quantity > 1">
-                    <p>
-                        Batteries:
-                        {{
-                            rcModel.batteries[0].pivot.quantity +
-                            'x ' +
-                            rcModel.batteries[0].capacity +
-                            'mAh ' +
-                            rcModel.batteries[0].type
-                        }}
-                    </p>
-                </div>
-                <div v-else>
-                    <p>
-                        Batterie:
-                        {{ rcModel.batteries[0].capacity + 'mAh ' + rcModel.batteries[0].type }}
-                    </p>
+                    <div v-else-if="rcModel.batteries[0].pivot.quantity > 1">
+                        <p>
+                            {{
+                                rcModel.batteries[0].pivot.quantity +
+                                'x ' +
+                                rcModel.batteries[0].capacity +
+                                'mAh ' +
+                                rcModel.batteries[0].type
+                            }}
+                        </p>
+                    </div>
+                    <div v-else>
+                        <p>
+                            {{ rcModel.batteries[0].capacity + 'mAh ' + rcModel.batteries[0].type }}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div v-if="rcModel.acquired_on || rcModel.finished_on || rcModel.first_flown_on">
-            <h1>Historique</h1>
-            <p v-if="rcModel.acquired_on">
-                Acquis le :
-                {{ moment(rcModel.acquired_on).format('DD.MM.yyyy') }}
-            </p>
-            <p v-if="rcModel.finished_on">
-                Fini le:
-                {{ moment(rcModel.finished_on).format('DD.MM.yyyy') }}
-            </p>
-            <p v-if="rcModel.first_flown_on">
-                Mis en service le:
-                {{ moment(rcModel.first_flown_on).format('DD.MM.yyyy') }}
-            </p>
-        </div>
-        <div v-if="rcModel.transmitter">
-            <h1>Radiocommande</h1>
-            <p>
-                {{ rcModel.transmitter.manufacturer + ' ' + rcModel.transmitter.name }}
-            </p>
-        </div>
-        <div>
-            <h1>Vols</h1>
-            <p>
-                Nombre de vols:
-                {{ flights.quantity }}
-            </p>
+        <div class="grid md:grid-cols-3">
+            <div v-if="rcModel.acquired_on || rcModel.finished_on || rcModel.first_flown_on">
+                <h1>Historique</h1>
+                <p v-if="rcModel.acquired_on">
+                    Acquis le :
+                    {{ moment(rcModel.acquired_on).format('DD.MM.yyyy') }}
+                </p>
+                <p v-if="rcModel.finished_on">
+                    Fini le:
+                    {{ moment(rcModel.finished_on).format('DD.MM.yyyy') }}
+                </p>
+                <p v-if="rcModel.first_flown_on">
+                    Mis en service le:
+                    {{ moment(rcModel.first_flown_on).format('DD.MM.yyyy') }}
+                </p>
+            </div>
+            <div v-if="rcModel.transmitter">
+                <h1>Radiocommande</h1>
+                <p>
+                    {{ rcModel.transmitter.manufacturer + ' ' + rcModel.transmitter.name }}
+                </p>
+            </div>
+            <div>
+                <h1>Vols</h1>
+                <p>
+                    Nombre de vols:
+                    {{ flights.quantity }}
+                </p>
+            </div>
         </div>
     </div>
 </template>

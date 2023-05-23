@@ -6,24 +6,14 @@ import { useImagePreview } from '@/lib/image';
 import { ref } from 'vue';
 import { CheckIcon } from '@heroicons/vue/20/solid';
 import { useToast } from 'vue-toastification';
-import {
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems,
-    Dialog,
-    DialogPanel,
-    DialogTitle,
-    TransitionChild,
-    TransitionRoot,
-} from '@headlessui/vue';
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
 
 const fileInput = ref();
 const user = usePage().props.auth.user;
 const file = useForm({ image: null });
 const form = useForm({ user: null });
 const toast = useToast();
-const { preview, updatePreview, clearPreview } = useImagePreview(fileInput);
+const { preview, updatePreview } = useImagePreview(fileInput);
 const saved = ref(false);
 const openDelete = ref(false);
 
@@ -58,22 +48,22 @@ const submit = () => {
     <div class="relative min-w-full min-h-screen mb-5">
         <div>
             <div class="relative z-50 flex justify-between w-full px-8 pt-8">
-                <SideBarMenu menu-icon-class="text-app" />
+                <SideBarMenu />
             </div>
         </div>
         <div class="flex flex-col gap-4 mx-10 mt-3">
-            <h1 class="text-4xl text-gray-700"><b>Profil</b></h1>
-            <div class="flex flex-col items-center w-20">
+            <h1 class="text-4xl text-gray-700 md:text-6xl"><b>Profil</b></h1>
+            <div class="flex flex-col items-center w-20 md:w-40">
                 <div
                     v-if="preview"
-                    class="w-20 overflow-hidden bg-center bg-cover rounded-full aspect-square"
+                    class="h-20 max-w-full overflow-hidden bg-center bg-cover rounded-full aspect-square md:h-40"
                     @click="$refs.fileInput.click()"
                     :style="{
                         backgroundImage: `url('${preview}')`,
                     }" />
                 <img
                     v-else
-                    class="object-cover w-20 overflow-hidden rounded-full aspect-square"
+                    class="object-cover h-20 max-w-full overflow-hidden rounded-full md:h-40 aspect-square"
                     :src="`/image/user/${user.id}`"
                     :alt="user.username"
                     @click="$refs.fileInput.click()" />
@@ -83,26 +73,18 @@ const submit = () => {
                     accept="image/*"
                     @change="updatePreview"
                     class="hidden" />
-                <button @click="updateImage(user.id)">Appliquer</button>
+                <button @click="updateImage(user.id)" class="md:text-2xl">Appliquer</button>
             </div>
-            <form @submit.prevent="submit">
-                <div class="[&>div>p]:text-sm [&>div>input]:text-app flex flex-col gap-4">
+            <form
+                @submit.prevent="submit"
+                class="[&_button]:md:text-2xl [&>div>div>p]:text-sm [&>div>div>p]:md:text-2xl [&>div>div>input]:text-2xl [&>div>div>input]:text-app flex flex-col gap-4">
+                <div class="grid md:grid-cols-2 md:gap-5">
                     <div>
                         <p>Nom d'utilisateur</p>
                         <input
                             type="text"
                             v-model="form.user.username"
-                            placeholder=""
-                            @keydown="saved = false"
-                            required
-                            class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
-                    </div>
-                    <div>
-                        <p>Prénom</p>
-                        <input
-                            type="text"
-                            v-model="form.user.firstname"
-                            placeholder=""
+                            maxlength="25"
                             @keydown="saved = false"
                             required
                             class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
@@ -112,7 +94,17 @@ const submit = () => {
                         <input
                             type="text"
                             v-model="form.user.lastname"
-                            placeholder=""
+                            maxlength="25"
+                            @keydown="saved = false"
+                            required
+                            class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
+                    </div>
+                    <div>
+                        <p>Prénom</p>
+                        <input
+                            type="text"
+                            v-model="form.user.firstname"
+                            maxlength="25"
                             @keydown="saved = false"
                             required
                             class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
@@ -126,36 +118,34 @@ const submit = () => {
                             required
                             class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
                     </div>
-                    <div
-                        class="grid items-center justify-center grid-cols-1 gap-3 md:grid-cols-2 place-items-center">
-                        <button
-                            id="saveButton"
-                            class="flex items-center justify-center transition-all rounded-full shadow-lg drop-shadow text-app disabled:bg-slate-200 disabled:text-gray-500 disabled:cursor-not-allowed disabled:opacity-60"
-                            :class="[
-                                saved ? 'bg-Valid w-5 p-8 hover:cursor-default' : 'w-full py-5',
-                            ]"
-                            :disabled="
-                                !form.user.username ||
-                                !form.user.firstname ||
-                                !form.user.lastname ||
-                                !form.user.birthdate
-                            "
-                            @click="saved = !saved">
-                            <p v-if="!saved">Sauvegarder</p>
-                            <CheckIcon v-else class="absolute z-10 text-white w-7" />
-                        </button>
-                        <Link
-                            :href="'/user/' + user.id + '/change-password'"
-                            class="flex items-center justify-center w-full py-5 transition-all rounded-full shadow-lg text-app drop-shadow">
-                            <p>Changer de mot de passe</p>
-                        </Link>
-                    </div>
-                    <button
-                        @click="openDelete = true"
-                        class="flex items-center justify-center w-full py-5 text-white transition-all rounded-full shadow-lg drop-shadow bg-Error hover:bg-red-600">
-                        <p>Supprimer mon compte</p>
-                    </button>
                 </div>
+                <div
+                    class="grid items-center justify-center grid-cols-1 gap-3 md:grid-cols-2 place-items-center">
+                    <button
+                        id="saveButton"
+                        class="flex items-center justify-center transition-all rounded-full shadow-lg drop-shadow text-app disabled:bg-slate-200 disabled:text-gray-500 disabled:cursor-not-allowed disabled:opacity-60"
+                        :class="[saved ? 'bg-Valid w-5 p-8 hover:cursor-default' : 'w-full py-5']"
+                        :disabled="
+                            !form.user.username ||
+                            !form.user.firstname ||
+                            !form.user.lastname ||
+                            !form.user.birthdate
+                        "
+                        @click="saved = !saved">
+                        <p v-if="!saved">Sauvegarder</p>
+                        <CheckIcon v-else class="absolute z-10 text-white w-7" />
+                    </button>
+                    <Link
+                        :href="'/user/' + user.id + '/change-password'"
+                        class="flex items-center justify-center w-full py-5 transition-all rounded-full shadow-lg text-app drop-shadow md:text-2xl">
+                        <p>Changer de mot de passe</p>
+                    </Link>
+                </div>
+                <button
+                    @click="openDelete = true"
+                    class="flex items-center justify-center w-full py-5 text-white transition-all rounded-full shadow-lg drop-shadow bg-Error hover:bg-red-600">
+                    <p>Supprimer mon compte</p>
+                </button>
             </form>
         </div>
     </div>

@@ -1,16 +1,14 @@
 <script setup>
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import Button from '@/Components/Button.vue';
-import SideBarMenu from '@/Components/SideBarMenu.vue';
 import PlusIcon from '@/Components/icons/PlusIcon.vue';
-import MoreIcon from '@/Components/icons/MoreIcon.vue';
 import TransmitterIcon from '@/Components/icons/TransmitterIcon.vue';
 import BatteryIcon from '@/Components/icons/BatteryIcon.vue';
 import GasIcon from '@/Components/icons/GasIcon.vue';
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import { computed } from 'vue';
 import { useToast } from 'vue-toastification';
-import { PlusCircleIcon } from '@heroicons/vue/20/solid';
+import PageHeader from '@/Components/PageHeader.vue';
+import AddLink from '@/Components/AddLink.vue';
 
 const user = usePage().props.auth.user;
 const toast = useToast();
@@ -40,29 +38,16 @@ if (message) {
     <Head title="Accueil" />
 
     <div class="relative min-w-full min-h-screen">
-        <div
-            class="h-[14rem] rounded-b-[4rem] bg-gradient-to-br from-gradientfrom to-gradientto text-white text-2xl">
-            <div class="relative z-50 flex justify-between w-full px-8 pt-8">
-                <SideBarMenu />
-
-                <div class="w-12 h-12 md:w-24">
-                    <img
-                        :src="`/image/user/${user.id}`"
-                        class="object-cover w-20 overflow-hidden rounded-full aspect-square" />
-                </div>
-            </div>
-            <div class="flex items-center justify-between">
-                <h1 class="pt-10 pl-12 md:text-4xl">Bonjour,<br />{{ user.username }}</h1>
-
-                <Link
-                    v-if="rcModels.length > 0"
-                    href="/rc-models/create"
-                    class="flex items-center gap-2 mt-10 mr-8">
-                    <PlusCircleIcon class="w-5 md:w-10" />
-                    <p class="md:text-4xl">Créer</p>
-                </Link>
-            </div>
-        </div>
+        <PageHeader>
+            <template #title
+                ><p>Bonjour,<br />{{ user.username }}</p>
+            </template>
+            <template #button>
+                <AddLink v-if="rcModels.length > 0" href="/rc-models/create">
+                    <template #button-text>Créer</template>
+                </AddLink>
+            </template>
+        </PageHeader>
         <div v-if="rcModels.length <= 0">
             <div class="flex items-center justify-center mt-5">
                 <p>Vous n'avez pas encore de modèles.<br />Créez-en un en cliquant ci-dessous</p>
@@ -90,7 +75,8 @@ if (message) {
                     >
                 </div>
                 <Link as="div" :href="'/rc-models/' + rcModel.id" class="flex justify-between">
-                    <div class="aspect-square w-32 md:w-72 rounded-[2rem] md:rounded-[4rem] overflow-hidden">
+                    <div
+                        class="aspect-square w-32 md:w-72 rounded-[2rem] md:rounded-[4rem] overflow-hidden">
                         <img
                             :src="`/image/rcModel/${rcModel.id}`"
                             :alt="rcModel.name"
@@ -98,7 +84,7 @@ if (message) {
                     </div>
                     <div
                         class="flex flex-col justify-evenly md:[&>div>p]:text-3xl md:[&>div>div>p]:text-3xl">
-                        <div class="flex items-center [&>*]:mx-1">
+                        <div v-if="rcModel.transmitter" class="flex items-center [&>*]:mx-1">
                             <TransmitterIcon class="w-7 md:w-10" />
                             <p>
                                 {{

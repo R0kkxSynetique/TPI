@@ -1,14 +1,13 @@
 <script setup>
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import Button from '@/Components/Button.vue';
-import SideBarMenu from '@/Components/SideBarMenu.vue';
-import TransmitterIcon from '@/Components/icons/TransmitterIcon.vue';
 import { PlusCircleIcon, BoltIcon, ArrowPathIcon } from '@heroicons/vue/20/solid';
 import GasIcon from '../Components/icons/GasIcon.vue';
 import { computed } from 'vue';
 import { useToast } from 'vue-toastification';
+import PageHeader from '../Components/PageHeader.vue';
+import AddLink from '../Components/AddLink.vue';
 
-const user = usePage().props.auth.user;
 const toast = useToast();
 
 defineProps({
@@ -18,7 +17,7 @@ defineProps({
 const message = computed(() => usePage().props.flash.message).value;
 const type = computed(() => usePage().props.flash.type).value;
 
-if (message){
+if (message) {
     switch (type) {
         case 'success':
             toast.success(message);
@@ -30,36 +29,22 @@ if (message){
             toast(message);
     }
 }
-
 </script>
 
 <template>
     <Head title="Accueil" />
 
     <div class="relative min-w-full min-h-screen">
-        <div
-            class="h-[14rem] rounded-b-[4rem] bg-gradient-to-br from-gradientfrom to-gradientto text-white text-2xl">
-            <div class="relative z-50 flex justify-between w-full px-8 pt-8">
-                <SideBarMenu />
-
-                <div class="w-12 h-12">
-                    <img
-                        :src="`/image/user/${user.id}`"
-                        class="object-cover w-20 overflow-hidden rounded-full aspect-square" />
-                </div>
-            </div>
-            <div class="flex items-center justify-between">
-                <h1 class="pt-10 pl-12">Mes<br/>moteurs</h1>
-
-                <Link
-                    v-if="engines.length > 0"
-                    href="/engines/create"
-                    class="flex items-center justify-center gap-2 mt-10 mr-8">
-                    <PlusCircleIcon class="w-6 fill-white" />
-                    <p>Créer</p>
-                </Link>
-            </div>
-        </div>
+        <PageHeader>
+            <template #title
+                ><p>Mes<br />moteurs</p>
+            </template>
+            <template #button>
+                <AddLink v-if="engines.length > 0" href="/engines/create">
+                    <template #button-text>Créer</template>
+                </AddLink>
+            </template>
+        </PageHeader>
         <div v-if="engines.length <= 0">
             <div class="flex items-center justify-center mt-5">
                 <p>Vous n'avez pas encore de moteurs.<br />Créez-en un en cliquant ci-dessous</p>
@@ -74,35 +59,39 @@ if (message){
                 </Link>
             </div>
         </div>
-        <div class="grid grid-cols-1 gap-3 mx-5 md:grid-cols-5">
-            <div v-for="engine in engines" class="py-10 px-5 shadow-lg h-56 rounded-[3rem] mb-2 last:mb-4">
+        <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
+            <div
+                v-for="engine in engines"
+                class="py-10 px-5 mx-2 shadow-lg h-56 md:h-full md:py-5 rounded-[3rem]">
                 <div class="flex justify-between py-2">
-                    <span as="h1" class="max-w-full text-xl truncate text-app">{{
+                    <span as="h1" class="max-w-full text-xl truncate md:text-4xl text-app">{{
                         engine.name
                     }}</span>
                 </div>
-                <div class="grid justify-between grid-cols-2">
-                    <div class="aspect-square w-32 rounded-[2rem] overflow-hidden">
+                <div class="grid justify-between grid-cols-2 md:gap-5">
+                    <div
+                        class="aspect-square w-32 md:w-72 rounded-[2rem] md:rounded-[4rem] overflow-hidden">
                         <img
                             :src="`/image/engine/${engine.id}`"
                             :alt="engine.name"
                             class="object-cover w-full h-full" />
                     </div>
-                    <div class="flex flex-col justify-evenly">
+                    <div
+                        class="flex flex-col justify-evenly md:[&>div>p]:text-3xl md:[&>div>div>p]:text-3xl">
                         <div v-if="engine.power" class="flex items-center [&>*]:mx-1">
-                            <BoltIcon class="w-5 fill-app" />
+                            <BoltIcon class="w-5 fill-app md:w-10" />
                             <p>
-                                {{ engine.power + "cc"}}
+                                {{ engine.power + 'cc' }}
                             </p>
                         </div>
                         <div v-if="engine.fuel" class="flex items-center [&>*]:mx-1">
-                            <GasIcon class="w-5 mx-0 fill-app" />
+                            <GasIcon class="w-5 mx-0 fill-app md:w-10" />
                             <p class="flex-1 truncate">
                                 {{ engine.fuel }}
                             </p>
                         </div>
                         <div v-if="engine.frequency" class="flex items-center [&>*]:mx-1">
-                            <ArrowPathIcon class="w-5 fill-app" />
+                            <ArrowPathIcon class="w-5 fill-app md:w-10" />
                             <p class="flex-1 truncate">
                                 {{ engine.frequency }}
                             </p>
