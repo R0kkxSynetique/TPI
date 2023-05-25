@@ -302,7 +302,6 @@ function deleteEngine() {
                                                     <input
                                                         type="number"
                                                         v-model="formEdit.engine.power"
-                                                        required
                                                         max="10000"
                                                         placeholder="120"
                                                         class="w-full p-0 py-2 border-0 focus:ring-0" />
@@ -323,7 +322,6 @@ function deleteEngine() {
                                                     <input
                                                         type="text"
                                                         v-model="formEdit.engine.frequency"
-                                                        required
                                                         max="50000"
                                                         :placeholder="
                                                             formEdit.engine.type == 'thermique'
@@ -345,7 +343,6 @@ function deleteEngine() {
                                                     type="text"
                                                     v-model="formEdit.engine.fuel"
                                                     maxlength="50"
-                                                    required
                                                     placeholder="95 SP 3.3%"
                                                     class="w-full p-0 py-2 border-0 focus:ring-0" />
                                             </div>
@@ -355,7 +352,6 @@ function deleteEngine() {
                                                     <input
                                                         type="text"
                                                         v-model="formEdit.engine.weight"
-                                                        required
                                                         max="50000"
                                                         placeholder="3450"
                                                         class="w-full p-0 py-2 border-0 focus:ring-0" />
