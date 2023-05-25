@@ -23,8 +23,7 @@ class QRCodeController extends Controller
     public function createQr($rcModelId)
     {
         $path = storage_path('app/QRCodes/') . $rcModelId . ".svg";
-        // $url = env('APP_URL') . '/rc-models/'. $rcModelId;
-        $url = "http://192.168.160.69" . '/rc-models/' . $rcModelId . '/guest';
+        $url = env('APP_URL') . '/rc-models/'. $rcModelId . '/guest';
         $headers = array(
             'Content-Type: image/svg+xml',
         );
