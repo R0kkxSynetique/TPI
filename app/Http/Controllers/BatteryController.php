@@ -6,6 +6,7 @@ use App\Models\Battery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class BatteryController extends Controller
 {
@@ -39,7 +40,7 @@ class BatteryController extends Controller
         $input->put('user_id', Auth::user()->id);
 
         // * Creating the battery in the database
-        $battery = DB::transaction(function () use ($input) {
+        DB::transaction(function () use ($input) {
             $battery = Battery::create($input->only([
                 'capacity',
                 'cells',
@@ -67,22 +68,41 @@ class BatteryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return [
+            'battery' => Battery::find($id),
+        ];
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(string $batteryId)
     {
-        //
+        $input = collect(request()->get('battery'));
+
+        $battery = Battery::find($batteryId);
+
+        DB::transaction(function () use ($input, $battery) {
+            $battery->update($input->only([
+                'capacity',
+                'cells',
+                'type',
+                'cRate',
+            ])->toArray());
+        });
+
+        return redirect()->route('batteries.index')->with(['message' => 'Batterie mise à jour avec succès!', 'type' => 'success']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $batteryId)
     {
-        //
+        $battery = Battery::find($batteryId);
+
+        $battery->delete();
+
+        return redirect()->route('batteries.index')->with(['message' => 'Batterie supprimée avec succès!', 'type' => 'success']);
     }
 }
