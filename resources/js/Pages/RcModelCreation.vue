@@ -4,7 +4,14 @@ import SideBarMenu from '@/Components/SideBarMenu.vue';
 import Button from '@/Components/Button.vue';
 import CrossIcon from '@/Components/icons/CrossIcon.vue';
 import { ref } from 'vue';
-import { PhotoIcon, PlusIcon, CheckIcon, ChevronDownIcon, StarIcon, XCircleIcon } from '@heroicons/vue/20/solid';
+import {
+    PhotoIcon,
+    PlusIcon,
+    CheckIcon,
+    ChevronDownIcon,
+    StarIcon,
+    XCircleIcon,
+} from '@heroicons/vue/20/solid';
 import {
     Listbox,
     ListboxButton,
@@ -271,9 +278,17 @@ const submit = () => {
                             class="flex items-center gap-1 px-2 py-1 rounded-full bg-app-secondary w-fit"
                             v-for="n in engine.pivot.quantity">
                             <p class="whitespace-nowrap">
-                                {{ engine.name + ' ' + engine.power }}
+                                {{
+                                    engine.power != null
+                                        ? engine.name + ' ' + engine.power
+                                        : engine.frequency != null
+                                        ? engine.name + ' ' + engine.frequency
+                                        : engine.name
+                                }}
                             </p>
-                            <XCircleIcon class="w-4 md:w-8" @click="removeEngineFromRcModel(index)" />
+                            <XCircleIcon
+                                class="w-4 md:w-8"
+                                @click="removeEngineFromRcModel(index)" />
                         </div>
                     </div>
                     <div
@@ -327,9 +342,17 @@ const submit = () => {
                                                                             <span
                                                                                 class="flex items-center">
                                                                                 <span>{{
-                                                                                    selectedEngine.name +
-                                                                                    ' ' +
-                                                                                    selectedEngine.power
+                                                                                    selectedEngine.power !=
+                                                                                    null
+                                                                                        ? selectedEngine.name +
+                                                                                          ' ' +
+                                                                                          selectedEngine.power
+                                                                                        : selectedEngine.frequency !=
+                                                                                          null
+                                                                                        ? selectedEngine.name +
+                                                                                          ' ' +
+                                                                                          selectedEngine.frequency
+                                                                                        : selectedEngine.name
                                                                                 }}</span>
                                                                             </span>
                                                                             <span
@@ -377,9 +400,17 @@ const submit = () => {
                                                                                                         engine.user_id
                                                                                                     "
                                                                                                     class="w-4" />{{
-                                                                                                    engine.name +
-                                                                                                    ' ' +
-                                                                                                    engine.power
+                                                                                                    engine.power !=
+                                                                                                    null
+                                                                                                        ? engine.name +
+                                                                                                          ' ' +
+                                                                                                          engine.power
+                                                                                                        : engine.frequency !=
+                                                                                                          null
+                                                                                                        ? engine.name +
+                                                                                                          ' ' +
+                                                                                                          engine.frequency
+                                                                                                        : engine.name
                                                                                                 }}</span
                                                                                             >
                                                                                         </div>
@@ -446,7 +477,9 @@ const submit = () => {
                             <p class="whitespace-nowrap">
                                 {{ propeller.size + ' ' + propeller.type }}
                             </p>
-                            <XCircleIcon class="w-4 md:w-8" @click="removePropellerFromRcModel(index)" />
+                            <XCircleIcon
+                                class="w-4 md:w-8"
+                                @click="removePropellerFromRcModel(index)" />
                         </div>
                     </div>
                     <div
@@ -627,7 +660,9 @@ const submit = () => {
                                     battery.type
                                 }}
                             </p>
-                            <XCircleIcon class="w-4 md:w-8" @click="removeBatteryFromRcModel(index)" />
+                            <XCircleIcon
+                                class="w-4 md:w-8"
+                                @click="removeBatteryFromRcModel(index)" />
                         </div>
                     </div>
                     <div

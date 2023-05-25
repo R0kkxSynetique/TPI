@@ -6,6 +6,7 @@ use App\Models\Engine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\File;
 
 class EngineController extends Controller
@@ -82,23 +83,50 @@ class EngineController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return [
+            'engine' => Engine::find($id),
+        ];
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(string $engineId)
     {
-        //
+        $input = collect(request()->get('engine'));
+
+        if ($input->get('type') == "électrique"){
+            $input->put('power', null);
+        }
+
+        $engine = Engine::find($engineId);
+
+        DB::transaction(function () use ($input, $engine) {
+            $engine->update($input->only([
+                'name',
+                'power',
+                'type',
+                'weight',
+                'frequency',
+                'fuel',            
+            ])->toArray());
+        });
+
+        return redirect()->route('engines.index')->with(['message' => 'Moteur mis à jour avec succès!', 'type' => 'success']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $engineId)
     {
-        //
+        $engine = Engine::find($engineId);
+
+        $engine->delete();
+        
+        Storage::delete("EnginesImages/{$engineId}.jpg");
+
+        return redirect()->route('engines.index')->with(['message' => 'Moteur supprimé avec succès!', 'type' => 'success']);
     }
 
     /**
