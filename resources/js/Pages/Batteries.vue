@@ -167,7 +167,7 @@ function deleteBattery(){
         <div class="grid max-h-full grid-cols-2 mt-4 xl:grid-cols-7">
             <div v-for="battery in batteries" class="mx-2 shadow-lg rounded-[3rem] py-5 mb-4">
                 <div class="flex justify-end mr-3">
-                    <Menu as="div" class="relative inline-block text-left" v-if="!props.guest">
+                    <Menu as="div" class="relative inline-block text-left">
                         <div>
                             <MenuButton>
                                 <EllipsisHorizontalIcon class="w-8 md:w-12" />
