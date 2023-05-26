@@ -20,7 +20,7 @@ import {
     EllipsisHorizontalIcon,
     PlusIcon,
     StarIcon,
-XCircleIcon,
+    XCircleIcon,
 } from '@heroicons/vue/20/solid';
 import Button from '../Components/Button.vue';
 import {
@@ -335,7 +335,8 @@ function updateImage(id) {
             </div>
             <div>
                 <h1>Caractéristiques</h1>
-                <div class="grid md:grid-cols-2 gap-5 my-3 [&>div>div>p]:py-2 [&>div>div>p]:border-b [&>div>div>p]:border-b-app">
+                <div
+                    class="grid md:grid-cols-2 gap-5 my-3 [&>div>div>p]:py-2 [&>div>div>p]:border-b [&>div>div>p]:border-b-app">
                     <div>
                         <p>Envergure:</p>
                         <div class="flex items-center w-full">
@@ -390,9 +391,17 @@ function updateImage(id) {
                             class="flex items-center gap-1 px-2 py-1 rounded-full bg-app-secondary w-fit"
                             v-for="n in engine.pivot.quantity">
                             <p class="whitespace-nowrap">
-                                {{ engine.name + ' ' + (engine.power || '') }}
+                                {{
+                                    engine.power != null
+                                        ? engine.name + ' ' + engine.power + ' cc'
+                                        : engine.frequency != null
+                                        ? engine.name + ' ' + engine.frequency + ' kV'
+                                        : engine.name
+                                }}
                             </p>
-                            <XCircleIcon class="w-4 md:w-8" @click="removeEngineFromRcModel(index)" />
+                            <XCircleIcon
+                                class="w-4 md:w-8"
+                                @click="removeEngineFromRcModel(index)" />
                         </div>
                     </div>
                     <div
@@ -446,10 +455,19 @@ function updateImage(id) {
                                                                             <span
                                                                                 class="flex items-center">
                                                                                 <span>{{
-                                                                                    selectedEngine.name +
-                                                                                    ' ' +
-                                                                                    (selectedEngine.power ||
-                                                                                        '')
+                                                                                    selectedEngine.power !=
+                                                                                    null
+                                                                                        ? selectedEngine.name +
+                                                                                          ' ' +
+                                                                                          selectedEngine.power +
+                                                                                          ' cc'
+                                                                                        : selectedEngine.frequency !=
+                                                                                          null
+                                                                                        ? selectedEngine.name +
+                                                                                          ' ' +
+                                                                                          selectedEngine.frequency +
+                                                                                          ' kV'
+                                                                                        : selectedEngine.name
                                                                                 }}</span>
                                                                             </span>
                                                                             <span
@@ -496,10 +514,19 @@ function updateImage(id) {
                                                                                                         engine.user_id
                                                                                                     "
                                                                                                     class="w-4" />{{
-                                                                                                    engine.name +
-                                                                                                    ' ' +
-                                                                                                    (engine.power ||
-                                                                                                        '')
+                                                                                                    engine.power !=
+                                                                                                    null
+                                                                                                        ? engine.name +
+                                                                                                          ' ' +
+                                                                                                          engine.power +
+                                                                                                          ' cc'
+                                                                                                        : engine.frequency !=
+                                                                                                          null
+                                                                                                        ? engine.name +
+                                                                                                          ' ' +
+                                                                                                          engine.frequency +
+                                                                                                          ' kV'
+                                                                                                        : engine.name
                                                                                                 }}</span
                                                                                             >
                                                                                         </div>
@@ -566,7 +593,9 @@ function updateImage(id) {
                             <p class="whitespace-nowrap">
                                 {{ propeller.size + ' ' + propeller.type }}
                             </p>
-                            <XCircleIcon class="w-4 md:w-8" @click="removePropellerFromRcModel(index)" />
+                            <XCircleIcon
+                                class="w-4 md:w-8"
+                                @click="removePropellerFromRcModel(index)" />
                         </div>
                     </div>
                     <div
@@ -747,7 +776,9 @@ function updateImage(id) {
                                     battery.type
                                 }}
                             </p>
-                            <XCircleIcon class="w-4 md:w-8" @click="removeBatteryFromRcModel(index)" />
+                            <XCircleIcon
+                                class="w-4 md:w-8"
+                                @click="removeBatteryFromRcModel(index)" />
                         </div>
                     </div>
                     <div
@@ -962,7 +993,7 @@ function updateImage(id) {
                                 <ChevronDownIcon class="w-5 h-5 text-gray-400" aria-hidden="true" />
                             </span>
                         </ListboxButton>
-    
+
                         <transition
                             leave-active-class="transition duration-100 ease-in"
                             leave-from-class="opacity-100"
@@ -986,11 +1017,13 @@ function updateImage(id) {
                                                     'ml-3 block truncate',
                                                 ]"
                                                 >{{
-                                                    transmitter.manufacturer + ' ' + transmitter.name
+                                                    transmitter.manufacturer +
+                                                    ' ' +
+                                                    transmitter.name
                                                 }}</span
                                             >
                                         </div>
-    
+
                                         <span
                                             v-show="selected"
                                             :class="[
@@ -1005,7 +1038,7 @@ function updateImage(id) {
                         </transition>
                     </div>
                 </Listbox>
-    
+
                 <div>
                     <h1>Vols</h1>
                     <input
