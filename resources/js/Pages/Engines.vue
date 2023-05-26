@@ -8,7 +8,7 @@ import {
     CheckIcon,
     ChevronDownIcon,
     EllipsisHorizontalIcon,
-ScaleIcon,
+    ScaleIcon,
 } from '@heroicons/vue/20/solid';
 import GasIcon from '../Components/icons/GasIcon.vue';
 import { computed, ref } from 'vue';
@@ -49,18 +49,7 @@ const openEdit = ref(false);
 const engineToDelete = ref(0);
 const engineTypes = ['thermique', 'électrique'];
 
-if (message) {
-    switch (type) {
-        case 'success':
-            toast.success(message);
-            break;
-        case 'error':
-            toast.error(message);
-            break;
-        default:
-            toast(message);
-    }
-}
+displayToast(message, type);
 
 function editEngine(engineId) {
     axios.get('/engines/' + engineId + '/edit').then((res) => {
@@ -76,43 +65,37 @@ function openDeleteEngine(engineId) {
 
 function updateEngine() {
     formEdit.put('/engines/' + formEdit.engine.id, {
-        onSuccess: () => {
+        onSuccess: (e) => {
             openEdit.value = false;
-            if (message) {
-                switch (type) {
-                    case 'success':
-                        toast.success(message);
-                        break;
-                    case 'error':
-                        toast.error(message);
-                        break;
-                    default:
-                        toast(message);
-                }
-            }
+            displayToast('Moteur mis à jour avec succès!', 'success')
         },
     });
 }
 
 function deleteEngine() {
     router.delete('/engines/' + engineToDelete.value, {
-        onSuccess: () => {
+        onSuccess: (e) => {
             openDelete.value = false;
-            if (message) {
-                switch (type) {
-                    case 'success':
-                        toast.success(message);
-                        break;
-                    case 'error':
-                        toast.error(message);
-                        break;
-                    default:
-                        toast(message);
-                }
-            }
+            displayToast('Moteur supprimé avec succès!', 'success')
         },
     });
 }
+
+function displayToast(content, resType) {
+    if (content) {
+        switch (resType) {
+            case 'success':
+                toast.success(content);
+                break;
+            case 'error':
+                toast.error(content);
+                break;
+            default:
+                toast(content);
+        }
+    }
+}
+
 </script>
 
 <template>
@@ -194,7 +177,7 @@ function deleteEngine() {
                         </transition>
                     </Menu>
                 </div>
-                <div class="flex justify-between py-2 -mt-10">
+                <div class="flex justify-between py-2 -mt-8 md:-mt-10">
                     <span as="h1" class="max-w-full text-xl truncate md:text-4xl text-app">{{
                         engine.name
                     }}</span>

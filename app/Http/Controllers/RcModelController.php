@@ -212,7 +212,7 @@ class RcModelController extends Controller
         });
 
         // * Redirecting to this rc model page with a success message
-        return redirect()->route('rc-models.show', $rcModel->id)->with(['message' => 'Modèle réduit mit à jour avec succès!', 'type' => 'success']);
+        return redirect()->route('rc-models.show', $rcModel->id)->with(['message' => 'Modèle réduit mis à jour avec succès!', 'type' => 'success']);
     }
 
     /**
