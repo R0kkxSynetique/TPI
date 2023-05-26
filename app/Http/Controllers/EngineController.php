@@ -112,7 +112,7 @@ class EngineController extends Controller
             ])->toArray());
         });
 
-        return redirect()->route('engines.index')->with(['message' => 'Moteur mis à jour avec succès!', 'type' => 'success']);
+        return back();
     }
 
     /**
@@ -126,7 +126,7 @@ class EngineController extends Controller
         
         Storage::delete("EnginesImages/{$engineId}.jpg");
 
-        return redirect()->route('engines.index')->with(['message' => 'Moteur supprimé avec succès!', 'type' => 'success']);
+        return back();
     }
 
     /**

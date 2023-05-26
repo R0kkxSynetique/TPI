@@ -6,10 +6,10 @@ import {
     Battery100Icon,
     CircleStackIcon,
     BoltIcon,
-    PlusIcon,
     CheckIcon,
     ChevronDownIcon,
     EllipsisHorizontalIcon,
+    PlusCircleIcon,
 } from '@heroicons/vue/20/solid';
 import Button from '@/Components/Button.vue';
 import { ref, computed } from 'vue';
@@ -56,12 +56,9 @@ const openDelete = ref(false);
 const openCreate = ref(false);
 const openEdit = ref(false);
 
-const batteryToDelete = ref(0)
+const batteryToDelete = ref(0);
 
 const batteryTypes = ['LiPo', 'LiFe', 'Li-Ion', 'NiMH', 'NiCd'];
-
-const message = computed(() => usePage().props.flash.message).value;
-const type = computed(() => usePage().props.flash.type).value;
 
 const toast = useToast();
 
@@ -69,18 +66,7 @@ const submit = () => {
     form.post(`/batteries`, {
         onSuccess: () => {
             openCreate.value = false;
-            if (message) {
-                switch (type) {
-                    case 'success':
-                        toast.success(message);
-                        break;
-                    case 'error':
-                        toast.error(message);
-                        break;
-                    default:
-                        toast(message);
-                }
-            }
+            displayToast('Batterie créée avec succès!', 'success');
         },
     });
 };
@@ -89,18 +75,7 @@ function updateBattery() {
     formEdit.put('/batteries/' + formEdit.battery.id, {
         onSuccess: () => {
             openEdit.value = false;
-            if (message) {
-                switch (type) {
-                    case 'success':
-                        toast.success(message);
-                        break;
-                    case 'error':
-                        toast.error(message);
-                        break;
-                    default:
-                        toast(message);
-                }
-            }
+            displayToast('batterie mise à jour avec succès!', 'success');
         },
     });
 }
@@ -112,29 +87,33 @@ function editBattery(batteryId) {
     });
 }
 
-function openDeleteBattery(batteryId){
+function openDeleteBattery(batteryId) {
     batteryToDelete.value = batteryId;
     openDelete.value = true;
 }
 
-function deleteBattery(){
+function deleteBattery() {
     router.delete('/batteries/' + batteryToDelete.value, {
         onSuccess: () => {
-            openDelete.value = false
-            if (message) {
-                switch (type) {
-                    case 'success':
-                        toast.success(message);
-                        break;
-                    case 'error':
-                        toast.error(message);
-                        break;
-                    default:
-                        toast(message);
-                }
-            }
+            openDelete.value = false;
+            displayToast('Batterie supprimée avec succès!', 'success');
+        },
+    });
+}
+
+function displayToast(content, resType) {
+    if (content) {
+        switch (resType) {
+            case 'success':
+                toast.success(content);
+                break;
+            case 'error':
+                toast.error(content);
+                break;
+            default:
+                toast(content);
         }
-    })
+    }
 }
 </script>
 
@@ -159,7 +138,7 @@ function deleteBattery(){
 
             <div class="flex items-center justify-center mt-5">
                 <Button @click="openCreate = true" class="flex items-center justify-center">
-                    <PlusIcon class="w-5 fill-white" />
+                    <PlusCircleIcon class="w-6 fill-white" />
                     <p>Céer</p>
                 </Button>
             </div>
@@ -213,7 +192,7 @@ function deleteBattery(){
                         </transition>
                     </Menu>
                 </div>
-                <div class="grid items-center grid-cols-3 px-3 [&>p]:md:text-2xl">
+                <div class="grid items-center grid-cols-3 px-3 [&>p]:md:text-2xl -mt-8 md:-mt-10">
                     <TagIcon class="w-5 md:w-8 fill-app" />
                     <p class="col-span-2">{{ battery.type }}</p>
                     <Battery100Icon class="w-5 md:w-8 fill-app" />

@@ -194,14 +194,14 @@ const submit = () => {
             <input
                 type="text"
                 v-model="form.rcModel.name"
-                placeholder="Mitsubishi A6m zero"
+                placeholder="Nom du modèle"
                 required
                 maxlength="50"
                 class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
             <input
                 type="text"
                 v-model="form.rcModel.manufacturer"
-                placeholder="Constructeur"
+                placeholder="Constructeur du kit"
                 maxlength="50"
                 class="w-full p-0 py-2 border-t-0 border-l-0 border-r-0 border-b-app focus:ring-0" />
         </div>
@@ -280,9 +280,9 @@ const submit = () => {
                             <p class="whitespace-nowrap">
                                 {{
                                     engine.power != null
-                                        ? engine.name + ' ' + engine.power
+                                        ? engine.name + ' ' + engine.power + ' cc'
                                         : engine.frequency != null
-                                        ? engine.name + ' ' + engine.frequency
+                                        ? engine.name + ' ' + engine.frequency + ' kV'
                                         : engine.name
                                 }}
                             </p>
@@ -346,12 +346,14 @@ const submit = () => {
                                                                                     null
                                                                                         ? selectedEngine.name +
                                                                                           ' ' +
-                                                                                          selectedEngine.power
+                                                                                          selectedEngine.power +
+                                                                                          ' cc'
                                                                                         : selectedEngine.frequency !=
                                                                                           null
                                                                                         ? selectedEngine.name +
                                                                                           ' ' +
-                                                                                          selectedEngine.frequency
+                                                                                          selectedEngine.frequency +
+                                                                                          ' kV'
                                                                                         : selectedEngine.name
                                                                                 }}</span>
                                                                             </span>
@@ -404,12 +406,14 @@ const submit = () => {
                                                                                                     null
                                                                                                         ? engine.name +
                                                                                                           ' ' +
-                                                                                                          engine.power
+                                                                                                          engine.power +
+                                                                                                          ' cc'
                                                                                                         : engine.frequency !=
                                                                                                           null
                                                                                                         ? engine.name +
                                                                                                           ' ' +
-                                                                                                          engine.frequency
+                                                                                                          engine.frequency +
+                                                                                                          ' kV'
                                                                                                         : engine.name
                                                                                                 }}</span
                                                                                             >

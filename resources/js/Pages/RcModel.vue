@@ -291,9 +291,8 @@ function printQr() {
                             {{
                                 engine.pivot.quantity +
                                 'x ' +
-                                engine.name +
-                                ' ' +
-                                (engine.power || '')
+                                engine.name + ' ' +
+                                (engine.power != null ?  engine.power + ' cc' : engine.frequency ? engine.frequency + ' kV' : '')
                             }}
                         </p>
                     </div>
@@ -304,13 +303,13 @@ function printQr() {
                                 'x ' +
                                 rcModel.engines[0].name +
                                 ' ' +
-                                (rcModel.engines[0].power || '')
+                                (rcModel.engines[0].power != null ? rcModel.engines[0].power + ' cc' : rcModel.engines[0].frequency ? rcModel.engines[0].frequency + ' kV' : '')
                             }}
                         </p>
                     </div>
                     <div v-else>
                         <p>
-                            {{ rcModel.engines[0].name + ' ' + (rcModel.engines[0].power || '') }}
+                            {{ rcModel.engines[0].name + ' ' + (rcModel.engines[0].power != null ? rcModel.engines[0].power + ' cc' : rcModel.engines[0].frequency ? rcModel.engines[0].frequency + ' kV' : '') }}
                         </p>
                     </div>
                 </div>

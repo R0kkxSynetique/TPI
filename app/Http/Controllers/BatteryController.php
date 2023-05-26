@@ -52,7 +52,7 @@ class BatteryController extends Controller
         });
 
         // * Redirecting to the user's batteries list
-        return redirect()->back()->with(['message' => 'Votre batterie à été crée avec succès', 'type' => 'success']);
+        return back();
     }
 
     /**
@@ -91,7 +91,7 @@ class BatteryController extends Controller
             ])->toArray());
         });
 
-        return redirect()->route('batteries.index')->with(['message' => 'Batterie mise à jour avec succès!', 'type' => 'success']);
+        return back();
     }
 
     /**
@@ -103,6 +103,6 @@ class BatteryController extends Controller
 
         $battery->delete();
 
-        return redirect()->route('batteries.index')->with(['message' => 'Batterie supprimée avec succès!', 'type' => 'success']);
+        return back();
     }
 }
