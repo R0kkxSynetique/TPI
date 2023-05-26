@@ -38,7 +38,7 @@ class EnginesSeeder extends Seeder
                 'type' => 'électrique',
                 'fuel' => '3S',
                 'weight' => '169',
-                'frequency' => '1160kV',
+                'frequency' => '1160',
                 'user_id' => 1
             ]
         ];

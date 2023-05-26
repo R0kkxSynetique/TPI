@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(1)->create();
 
         \App\Models\User::factory(1)->create([
-            'email' => 'test@doe.ch',
+            'email' => 'test@aero.ch',
         ]);
         $this->call([
             PropellersSeeder::class,
