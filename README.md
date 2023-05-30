@@ -4,7 +4,7 @@
 
 * WSL 2
 * Laravel 10
-* JetStream 3 with Inertia
+* JetStream 3 avec Inertia
 * Docker
 * Visual Studio Code
   * Extensions
@@ -14,7 +14,7 @@
 * Composer
 * MySQL
 
-## Installation developpement
+## Installation - developpement
 
 ### Instller WSL 2 et une distribution Linux
 
@@ -28,10 +28,10 @@ Exécutez WSL pour accéder à votre linux puis clonez le repository dans le dos
 
 ### Exécuter le projet
 
-Ouvrez VSCode dans le sous dossier du projet s'appelant "AeroModel". 
+Ouvrez VSCode dans le dossier du projet s'appelant "TPI". 
 
 ```bash
-cd /path/to/project/pre-tpi/AeroModel
+cd /path/to/the/project/TPI
 ```
 
 Ensuite exécuter la commande docker suivante:
@@ -45,15 +45,11 @@ docker run --rm \
             composer install --ignore-platform-reqs
 ```
 
-Dès que la commande est terminée, exécutez la commande suivante pour ouvrir VSCode dans le dossier courant:
-
-```bash
-code .
-```
+Dès que la commande est terminée, ouvrez VSCode dans le dossier courant.
 
 Une fois le projet ouvert dans VSCode il vous sera sûrement proposé de `réouvrir le dossier dans un conteneur`. Acceptez.
 
-Si vous ne voyez pas cette option, ouvrez le menu de VSCode et cliquez sur "Reopen in Container".
+Si vous ne voyez pas cette option, ouvrez le menu de VSCode (`ctrl + shift + p`) et cliquez sur "Reopen in Container".
 
 Ouvrez ensuite la shell de VSCode puis exécutez la commande suivante pour installer les dépendences:
 
@@ -64,28 +60,40 @@ npm i
 Il faut encore copier le ficher `.env.example` et le renommer en `.env` et changer la configuration du fichier `vite.config.js` pour que le projet soit accessible depuis votre machine.
 
 ```bash
+#.env
+APP_DEBUG=true
+APP_URL=http://localhost # <--- Changer cette valeur
+
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=MyDatabase # <--- Changer cette valeur
+DB_USERNAME=MyUser # <--- Changer cette valeur
+DB_PASSWORD=MyPassword # <--- Changer cette valeur
+```
+
+```js
+// vite.config.js
 server: {
         hmr: {
-            // host: '192.168.1.10', // <-- votre ip locale
-            host: 'localhost',
+            host: 'localhost', // <--- Changer cette valeur
             protocol: 'ws',
         }
     }
 ```
 
-Finalement, il ne vous reste plus qu'à exécuter les migrations et les seeders pour vous trouver avec une base de données prête à l'emploi et des données de tests.
+Finalement, il ne vous reste plus qu'à exécuter les migrations et les seeders pour vous générer une base de données prête à l'emploi avec les données de tests.
 
-Exécutez la commande suivante dans la shell de VSCode pour créer la base de données et les tables et un utilisateur par défaut possédant l'adresse email `test@doe.ch` et le mot de passe `password` 
+Exécutez la commande suivante dans la shell de VSCode pour créer la base de données, les tables, un utilisateur par défaut possédant l'adresse email `test@doe.ch` et le mot de passe `password` et des modèles réduits. 
 
-Vous pouvez changer ces valeurs dans le fichier `DatabaseSeeder.php` et dans la factory `UserFactory.php`:
+Vous pouvez changer ces valeurs dans les fichiers correspondant dans le répertoire `./database/seeders` et dans la factory `./database/factories/UserFactory.php`:
  
 ```bash
 php artisan migrate:fresh --seed
 ```
 
-Puis exécutez le script SQL `ManualSeeder.sql` pour créer les données de tests.
+Les données générées sont les suivantes:
 
-Ce script se trouve dans le dossier `./database/scripts` et vous Créera les données suivantes:
 * 3 hélices
 * 2 moteurs
 * 2 télécommandes
@@ -117,12 +125,16 @@ Tout les modèles réduits sont liés à l'utilisateur qui à été crée à l'�
 
 Vous pouvez trouver les images des modèles réduits dans le dossier `./storage/app/RcModelsImages`.
 
-Elles sont nommées de la manière suivante: `id_du_modèle_réduit.jpg`
+Elles sont nommées de la manière suivante: `{id_du_modèle_réduit}.jpg`
 
-L'installation du projet est terminée.Pour `run` l'application, exécutez la commande suivante:
+L'installation du projet est terminée. Pour `run` l'application, exécutez la commande suivante:
 
 ```bash
 npm run dev
 ```
 
-Vous pouvez y accédez depuis votre navigateur en allant sur l'adresse suivante: `http://localhost`
+Vous pouvez y accédez depuis votre navigateur en allant sur l'adresse que vous avez entrée dans les fichier de configuration ou sur l'addresse suivante: `http://localhost`
+
+## Installation - production
+
+TODO
