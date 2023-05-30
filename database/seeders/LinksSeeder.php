@@ -86,37 +86,37 @@ class LinksSeeder extends Seeder
         $rcModelBatteries = [
             [
                 'rc_model_id' => 1,
-                'battery_id' => 1,
+                'battery_id' => 50,
                 'quantity' => 1
             ],
             [
                 'rc_model_id' => 1,
-                'battery_id' => 2,
+                'battery_id' => 58,
                 'quantity' => 2
             ],
             [
                 'rc_model_id' => 2,
-                'battery_id' => 3,
+                'battery_id' => 71,
                 'quantity' => 3
             ],
             [
                 'rc_model_id' => 3,
-                'battery_id' => 1,
+                'battery_id' => 50,
                 'quantity' => 2
             ],
             [
                 'rc_model_id' => 4,
-                'battery_id' => 1,
+                'battery_id' => 75,
                 'quantity' => 2
             ],
             [
                 'rc_model_id' => 4,
-                'battery_id' => 2,
+                'battery_id' => 110,
                 'quantity' => 2
             ],
             [
                 'rc_model_id' => 5,
-                'battery_id' => 1,
+                'battery_id' => 123,
                 'quantity' => 2
             ],
         ];
