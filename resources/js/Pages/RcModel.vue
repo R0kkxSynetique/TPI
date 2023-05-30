@@ -144,7 +144,9 @@ function printQr() {
                     </transition>
                 </Menu>
             </div>
-            <div class="flex items-center justify-center w-full -mt-6 md:-mt-12">
+            <div
+                class="flex items-center justify-center w-full"
+                :class="props.guest ? 'md:mt-0 mt-0' : 'md:-mt-12 -mt-6'">
                 <img
                     class="rounded-[2rem] object-cover align-middle max-w-full md:h-72 aspect-square md:aspect-auto h-40"
                     :src="`/image/rcModel/${rcModel.id}`"
@@ -291,8 +293,13 @@ function printQr() {
                             {{
                                 engine.pivot.quantity +
                                 'x ' +
-                                engine.name + ' ' +
-                                (engine.power != null ?  engine.power + ' cc' : engine.frequency ? engine.frequency + ' kV' : '')
+                                engine.name +
+                                ' ' +
+                                (engine.power != null
+                                    ? engine.power + ' cc'
+                                    : engine.frequency
+                                    ? engine.frequency + ' kV'
+                                    : '')
                             }}
                         </p>
                     </div>
@@ -303,13 +310,25 @@ function printQr() {
                                 'x ' +
                                 rcModel.engines[0].name +
                                 ' ' +
-                                (rcModel.engines[0].power != null ? rcModel.engines[0].power + ' cc' : rcModel.engines[0].frequency ? rcModel.engines[0].frequency + ' kV' : '')
+                                (rcModel.engines[0].power != null
+                                    ? rcModel.engines[0].power + ' cc'
+                                    : rcModel.engines[0].frequency
+                                    ? rcModel.engines[0].frequency + ' kV'
+                                    : '')
                             }}
                         </p>
                     </div>
                     <div v-else>
                         <p>
-                            {{ rcModel.engines[0].name + ' ' + (rcModel.engines[0].power != null ? rcModel.engines[0].power + ' cc' : rcModel.engines[0].frequency ? rcModel.engines[0].frequency + ' kV' : '') }}
+                            {{
+                                rcModel.engines[0].name +
+                                ' ' +
+                                (rcModel.engines[0].power != null
+                                    ? rcModel.engines[0].power + ' cc'
+                                    : rcModel.engines[0].frequency
+                                    ? rcModel.engines[0].frequency + ' kV'
+                                    : '')
+                            }}
                         </p>
                     </div>
                 </div>
@@ -320,7 +339,10 @@ function printQr() {
                     </p>
                     <!-- //todo: select the type based on all the engines -->
                 </div>
-                <p v-if="rcModel.propellers?.length > 1 || rcModel.propellers[0]?.pivot.quantity > 1">
+                <p
+                    v-if="
+                        rcModel.propellers?.length > 1 || rcModel.propellers[0]?.pivot.quantity > 1
+                    ">
                     Hélices:
                 </p>
                 <p v-else>Hélice:</p>
