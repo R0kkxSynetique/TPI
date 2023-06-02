@@ -41,7 +41,7 @@ function destroy(id) {
 const submit = () => {
     form.put(`/user/${user.id}`, {
         onSuccess: () => {
-          toast.success("Votre profil a bien été mis à jour.")
+            toast.success('Votre profil a bien été mis à jour.');
         },
         onError: (e) => {
             if (e.updateUser) {
@@ -150,6 +150,7 @@ const submit = () => {
                     </Link>
                 </div>
                 <button
+                    type="button"
                     @click="openDelete = true"
                     class="flex items-center justify-center w-full py-5 text-white transition-all rounded-full shadow-lg drop-shadow bg-Error hover:bg-red-600">
                     <p>Supprimer mon compte</p>

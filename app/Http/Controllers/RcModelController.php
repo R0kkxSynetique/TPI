@@ -251,8 +251,10 @@ class RcModelController extends Controller
         // * Deleting the rc model from the database
         $rcModel->delete();
 
-        // * Deleting the image from the storage
+        // * Deleting the images from the storage
         Storage::delete("RcModelsImages/{$rcModelid}.jpg");
+
+        Storage::delete("QRCodes/{$rcModelid}.svg");
 
         // * Redirecting to the "homepage" with a success message
         return redirect()->route('rc-models.index')->with(['message' => 'Modèle réduit supprimé avec succès!', 'type' => 'success']);
